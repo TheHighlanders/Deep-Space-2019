@@ -10,6 +10,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
@@ -18,8 +19,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * and for starting commands when buttons are pressed.
  * 
  * 
- * @author Baxter Ellard
- * @author David Matthews
+ * @author Max Nadeau
  */
 public class OI {
 	
@@ -80,6 +80,50 @@ public class OI {
 		return logitech.getRawAxis(RobotMap.LOGITECH_SLIDER_AXIS);
 		
 	}
+
+	/**
+	 * @return a double corresponding to the position of the Xbox controller's left 
+	 * joystick in the side to side direction (X axis).
+	 * Range of -1 to 1. All the way to the right is +1.
+	 */
+	public double getXboxLeftX() {
+		
+		return xbox.getX(GenericHID.Hand.kLeft);
+		
+	}
+	
+	/**
+	 * @return a double corresponding to the position of the Xbox controller's left 
+	 * joystick in the front-back direction (Y axis).
+	 * Range of -1 to 1. All the way forward is +1.
+	 */
+	public double getXboxLeftY() {
+		
+		return xbox.getY(GenericHID.Hand.kLeft);
+		
+	}
+	
+	/**
+	 * @return a double corresponding to the position of the Xbox controller's right 
+	 * joystick in the side to side direction (X axis).
+	 * Range of -1 to 1. All the way to the right is +1.
+	 */
+	public double getXboxRightX() {
+		
+		return xbox.getX(GenericHID.Hand.kRight);
+		
+	}
+	/**
+	 * @return a double corresponding to the position of the Xbox controller's right 
+	 * joystick in the front-back direction (Y axis).
+	 * Range of -1 to 1. All the way forward is +1.
+	 */
+	public double getXboxRightY() {
+		
+		return xbox.getY(GenericHID.Hand.kRight);
+		
+	}
+
 	
 	
 	//X Box buttons

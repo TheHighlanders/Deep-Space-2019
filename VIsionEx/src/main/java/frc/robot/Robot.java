@@ -12,15 +12,15 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
-import edu.wpi.cscore.AxisCamera;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 /**
  * This is a demo program showing the use of OpenCV to do vision processing. The
- * image is acquired from the Axis camera, then a rectangle is put on the image
+ * image is acquired from the USB camera, then a rectangle is put on the image
  * and sent to the dashboard. OpenCV has many methods for different types of
  * processing.
  */
@@ -30,9 +30,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_visionThread = new Thread(() -> {
-      // Get the Axis camera from CameraServer
-      AxisCamera camera
-          = CameraServer.getInstance().addAxisCamera("10.62.1.15");
+      // Get the UsbCamera from CameraServer
+      UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
       // Set the resolution
       camera.setResolution(640, 480);
 
@@ -58,7 +57,7 @@ public class Robot extends TimedRobot {
           continue;
         }
         // Put a rectangle on the image
-        Imgproc.rectangle(mat, new Point(50, 50), new Point(150, 150),
+        Imgproc.rectangle(mat, new Point(100, 100), new Point(400, 400),
             new Scalar(255, 255, 255), 5);
         // Give the output stream a new image to display
         outputStream.putFrame(mat);

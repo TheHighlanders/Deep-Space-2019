@@ -6,8 +6,10 @@ import frc.robot.commands.ArcadeDriveCmd;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -32,6 +34,7 @@ public class DriveTrain extends Subsystem {
 	private WPI_TalonSRX left2 = new WPI_TalonSRX(2);
 	public WPI_TalonSRX right1 = new WPI_TalonSRX(3);
 	private WPI_TalonSRX right2 = new WPI_TalonSRX(4);
+	public PWMVictorSPX middle = new PWMVictorSPX(0);
 		
 	// Gyro sensor
 	private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
@@ -54,10 +57,10 @@ public class DriveTrain extends Subsystem {
     	right1.configOpenloopRamp(1/3, 0);
     	right2.configOpenloopRamp(1/3, 0);
     	
-    	left1.setNeutralMode(NeutralMode.Brake);
-    	left2.setNeutralMode(NeutralMode.Brake);
-    	right1.setNeutralMode(NeutralMode.Brake);
-    	right2.setNeutralMode(NeutralMode.Brake);
+    	left1.setNeutralMode(NeutralMode.Coast);
+    	left2.setNeutralMode(NeutralMode.Coast);
+    	right1.setNeutralMode(NeutralMode.Coast);
+    	right2.setNeutralMode(NeutralMode.Coast);
     	
     	left1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
     	right1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
@@ -82,27 +85,18 @@ public class DriveTrain extends Subsystem {
 	 * @param rightPower
 	 *            Double speed of right motors. Range -1 to 1
 	 */
-    public void driveLR(double leftPower, double rightPower) {
+    public void drive(double leftPower, double rightPower, double middlePower) {
     	
   //  	DriverStation.reportWarning("Left Power: " + leftPower, false);
   //  	DriverStation.reportWarning("Right Power: " + rightPower, false);
     	//DriverStation.reportWarning("FOR: " + forwardOrReverse, false);
-    	if(forwardOrReverse == 1) {
-    		
-    		left1.set(-leftPower);
-    		left2.set(-leftPower);
-    		right1.set(rightPower);
-    		right2.set(rightPower);
-    		
-    		
-    	} else {
-    		
-    		left1.set(leftPower);
-    		left2.set(leftPower);
-    		right1.set(-rightPower);
-    		right2.set(-rightPower);
-    		
-    	}	    
+    	
+    	left1.set(leftPower);
+    	left2.set(leftPower);
+    	right1.set(-rightPower);
+    	right2.set(-rightPower);
+		middle.set(-middlePower);
+        
     	
     }
     
@@ -111,7 +105,7 @@ public class DriveTrain extends Subsystem {
 	 */
     public void stop() {
     	
-    	this.driveLR(0, 0);
+    	this.drive(0, 0, 0);
     	
     }
     
