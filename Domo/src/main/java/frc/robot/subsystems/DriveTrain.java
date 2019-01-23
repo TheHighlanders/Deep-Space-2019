@@ -22,19 +22,18 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 * TODO: Add a function that slows down the robot based on how high the elevator
 * is.
 * 
-* @author Baxter Ellard
-* @author David Matthews
+* @author Max Nadeau
 */
 
 public class DriveTrain extends Subsystem {
 
 	// Instantiating TalonSRX motor controllers at CAN ports
 	// 1 through 4.
-	public WPI_TalonSRX left1 = new WPI_TalonSRX(1);
-	private WPI_TalonSRX left2 = new WPI_TalonSRX(2);
-	public WPI_TalonSRX right1 = new WPI_TalonSRX(3);
-	private WPI_TalonSRX right2 = new WPI_TalonSRX(4);
-	public PWMVictorSPX middle = new PWMVictorSPX(0);
+	public WPI_TalonSRX left1;
+	private WPI_TalonSRX left2;
+	public WPI_TalonSRX right1;
+	private WPI_TalonSRX right2;
+	public PWMVictorSPX middle;
 		
 	// Gyro sensor
 	private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
@@ -50,12 +49,13 @@ public class DriveTrain extends Subsystem {
     	left1 = new WPI_TalonSRX(RobotMap.LEFT_DRIVE1);
     	left2 = new WPI_TalonSRX(RobotMap.LEFT_DRIVE2);
     	right1 = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE1);
-    	right2 = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE2);
+		right2 = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE2);
+		middle = new PWMVictorSPX(RobotMap.MIDDLE_DRIVE);
     	
-    	left1.configOpenloopRamp(1/3, 0);
-    	left2.configOpenloopRamp(1/3, 0);
-    	right1.configOpenloopRamp(1/3, 0);
-    	right2.configOpenloopRamp(1/3, 0);
+    	left1.configOpenloopRamp(2, 0);
+    	left2.configOpenloopRamp(2, 0);
+    	right1.configOpenloopRamp(2, 0);
+    	right2.configOpenloopRamp(2, 0);
     	
     	left1.setNeutralMode(NeutralMode.Coast);
     	left2.setNeutralMode(NeutralMode.Coast);
@@ -96,8 +96,6 @@ public class DriveTrain extends Subsystem {
     	right1.set(-rightPower);
     	right2.set(-rightPower);
 		middle.set(-middlePower);
-        
-    	
     }
     
     /**

@@ -109,7 +109,6 @@ public class Robot extends IterativeRobot {
  		dt.resetGyro();
  		dt.setEncoders(0);
 		dt.stop();
-		autonomousCommand = null;
 	}
 
 	/**

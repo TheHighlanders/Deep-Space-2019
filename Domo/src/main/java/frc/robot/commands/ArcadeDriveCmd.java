@@ -20,6 +20,7 @@ public class ArcadeDriveCmd extends Command {
 	
 	private final double TANDOMAIN_Y = 1.3;
 	private final double TANDOMAIN_X = 1.3;
+	private final double TANDOMAIN_TURN = 1.3;
 	
 
 	/*
@@ -31,12 +32,6 @@ public class ArcadeDriveCmd extends Command {
 	private double scaledValTan(double rawVal, double domain) {
 		
 		return Math.tan(rawVal * domain) / (Math.tan(domain));
-		
-	}
-	
-	private double linearElevatorFunction(double height) {
-		
-		return (-height / 104) + 1;
 		
 	}
 	
@@ -69,7 +64,7 @@ public class ArcadeDriveCmd extends Command {
 
 		processedX = scaledValTan(moveX, TANDOMAIN_X) * 0.9;
 		processedY = scaledValTan(moveY, TANDOMAIN_Y) * 0.9;
-		processedTurn = scaledValTan(turnX, TANDOMAIN_Y) * 0.9;
+		processedTurn = scaledValTan(turnX, TANDOMAIN_TURN) * 0.9;
 	
    	
     	DriverStation.reportWarning("Left X: " + Robot.oi.getXboxLeftX(), false);
@@ -85,7 +80,7 @@ public class ArcadeDriveCmd extends Command {
     	//DriverStation.reportWarning("Scaled Val Turn: " + scaledValTan(joystickX * joystickSlider, TANDOMAIN_X), false);
     	//DriverStation.reportWarning("Scaled Val Power: " + scaledValTan(joystickY * joystickSlider, TANDOMAIN_Y), false);
    	
-    	Robot.dt.drive(processedY - processedTurn, processedY + processedTurn, processedX);
+    	Robot.dt.drive(processedY + processedTurn, processedY - processedTurn, processedX);
     	
     }
 
