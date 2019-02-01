@@ -8,6 +8,7 @@
 package frc.robot;
 
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Climber;
 import frc.robot.grip.JavaPipeline;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -54,7 +55,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public static final DriveTrain dt = new DriveTrain();
 		
-	
+	public static final Climber cl = new Climber();
 	/**
 	 * Declare the Operator Interface object. DO NOT initialize it here; that
 	 * would cause No Robot Code to occur.

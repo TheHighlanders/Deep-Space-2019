@@ -28,8 +28,11 @@ public class OI {
 	 * This allows us to get the  current position of the joystick, and the state of all the buttons.
 	 * Initialized with the USB devices plugged into the robot
 	 */
-	public Button[] xboxButtons = new Button[7]; 
-	
+
+
+	public Button[] xboxButtons = new Button[7];
+	public Button[] joystickButtons = new Button[13];
+	private Joystick logitech = new Joystick(RobotMap.LOGITECH);
 	private XboxController xbox = new XboxController(RobotMap.XBOX);
 	
 	private Button lb = new JoystickButton(xbox,5);
@@ -100,12 +103,26 @@ public class OI {
 		}
 	
 	public OI() {
+		for(int i = 1; i < joystickButtons.length; i++) {
+			
+			joystickButtons[i] = new JoystickButton(logitech, i);
+			
+		}
+
 		for(int i = 1; i < xboxButtons.length; i++) {
 			
 			xboxButtons[i] = new JoystickButton(xbox, i);
 			
 		}
+		joystickButtons[3].whileHeld(new ClimberFrontExtendCmd());
+		joystickButtons[4].whileHeld(new ClimberFrontRetractCmd());
+		joystickButtons[5].whileHeld(new ClimberBackExtendCmd());
+		joystickButtons[6].whileHeld(new ClimberBackRetractCmd());
+		
+		
 		
 	}
+
+
 
 }
