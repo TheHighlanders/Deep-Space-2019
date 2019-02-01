@@ -64,7 +64,9 @@ public class ArcadeDriveCmd extends Command {
 
 		processedX = scaledValTan(moveX, TANDOMAIN_X) * 0.9;
 		processedY = scaledValTan(moveY, TANDOMAIN_Y) * 0.9;
-		processedTurn = scaledValTan(turnX, TANDOMAIN_TURN) * 0.9;
+
+		//This multiplication prevents output from exceeding (-1, 1)
+		processedTurn = (1 - Math.abs(processedY)) * scaledValTan(turnX, TANDOMAIN_TURN);
 	
    	
     	DriverStation.reportWarning("Left X: " + Robot.oi.getXboxLeftX(), false);

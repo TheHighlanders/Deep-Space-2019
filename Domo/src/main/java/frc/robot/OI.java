@@ -28,9 +28,6 @@ public class OI {
 	 * This allows us to get the  current position of the joystick, and the state of all the buttons.
 	 * Initialized with the USB devices plugged into the robot
 	 */
-	private Joystick logitech = new Joystick(RobotMap.LOGITECH);
-	
-	public Button[] joystickButtons = new Button[13];
 	public Button[] xboxButtons = new Button[7]; 
 	
 	private XboxController xbox = new XboxController(RobotMap.XBOX);
@@ -39,47 +36,6 @@ public class OI {
 	private Button rb = new JoystickButton(xbox, 6);
 	private Button bpress = new JoystickButton(xbox,10);
 	private Button y = new JoystickButton(xbox,4);
-	
-	/**
-	 * @return  a double corresponding to how much the joystick's handle is rotated.
-	 * This has a range of -1 to 1. All the way to the right is +1.
-	 */
-	public double getRotationAxisOfArcade() {
-		
-		return logitech.getRawAxis(RobotMap.LOGITECH_ROTATE_AXIS);
-		
-	}
-	
-	/**
-	 * @return a double corresponding to the position of the joystick in the side to side direction (X axis).
-	 * Range of -1 to 1. All the way to the right is +1.
-	 */
-	public double getXAxisOfArcade() {
-		
-		return logitech.getRawAxis(RobotMap.LOGITECH_X_AXIS);
-		
-	}
-	
-	/**
-	 * @return a double corresponding to the position of the joystick in the Y axis (front and back).
-	 * range of -1 to 1, with all the way forward being 1
-	 */
-	public double getYAxisOfArcade() {
-		
-		return logitech.getRawAxis(RobotMap.LOGITECH_Y_AXIS);
-		
-	}
-
-	/**
-	 * @return a double corresponding to the slider on the joystick roughly under 
-	 * the wrist of someone if they are holding it.Has a range of -1 or 1, where 
-	 * -1 is pointing the slider up and 1 is pointing it down
-	 */
-	public double getSliderAxisOfArcade() {
-		
-		return logitech.getRawAxis(RobotMap.LOGITECH_SLIDER_AXIS);
-		
-	}
 
 	/**
 	 * @return a double corresponding to the position of the Xbox controller's left 
@@ -144,13 +100,6 @@ public class OI {
 		}
 	
 	public OI() {
-		
-		for(int i = 1; i < joystickButtons.length; i++) {
-			
-			joystickButtons[i] = new JoystickButton(logitech, i);
-			
-		}
-		
 		for(int i = 1; i < xboxButtons.length; i++) {
 			
 			xboxButtons[i] = new JoystickButton(xbox, i);
