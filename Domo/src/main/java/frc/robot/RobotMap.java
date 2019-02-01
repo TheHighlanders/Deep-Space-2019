@@ -13,7 +13,7 @@ package frc.robot;
  * the wiring easier and significantly reduces the number of magic numbers
  * floating around.
  * 
- * @author Max
+ * @author Max Nadeau
  */
 public class RobotMap {
 	
@@ -22,12 +22,14 @@ public class RobotMap {
 	public static final int LEFT_DRIVE2 = 2;
 	public static final int RIGHT_DRIVE1 = 3;
 	public static final int RIGHT_DRIVE2 = 4;
-	public static final int MIDDLE_DRIVE = 0;
+	public static final int MIDDLE_DRIVE1 = 5;
+	public static final int MIDDLE_DRIVE2 = 6;
 
 	
 	// Sensors
 	
 	//X Box
-	public static final int XBOX = 2;
+	public static final int XBOX = 0;
+	public static final int LOGITECH = 1;
 	// public static final int XBOX_Z_AXIS = 2;
 }

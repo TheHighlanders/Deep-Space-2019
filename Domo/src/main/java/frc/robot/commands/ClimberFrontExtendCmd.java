@@ -9,8 +9,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ClimberFrontExtend extends Command {
-  public ClimberFrontExtend() {
+public class ClimberFrontExtendCmd extends Command {
+  public ClimberFrontExtendCmd() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }

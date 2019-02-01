@@ -94,7 +94,8 @@ public class Climber extends Subsystem {
 	 */
     public void stop() {
     	
-    	this.move(0,0);
+		this.moveFront(0);
+		this.moveBack(0);
     	
     }
     

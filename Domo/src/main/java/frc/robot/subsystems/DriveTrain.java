@@ -19,9 +19,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 * in moving the robot. Right now this is just the motors and gyro, but this
 * will probably grow to include encoders.
 * 
-* TODO: Add a function that slows down the robot based on how high the elevator
-* is.
-* 
 * @author Max Nadeau
 */
 
@@ -33,12 +30,15 @@ public class DriveTrain extends Subsystem {
 	private WPI_TalonSRX left2;
 	public WPI_TalonSRX right1;
 	private WPI_TalonSRX right2;
-	public PWMVictorSPX middle;
+	public WPI_TalonSRX middle1;
+	public WPI_TalonSRX middle2;
 		
 	// Gyro sensor
 	private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	
 	public static int forwardOrReverse = -1;
+
+	private static int rampTime = 1;
 	
 	/**
 	 * Constructor, sets up motors, prevents brownouts, and minimizes pedestrian
@@ -50,12 +50,14 @@ public class DriveTrain extends Subsystem {
     	left2 = new WPI_TalonSRX(RobotMap.LEFT_DRIVE2);
     	right1 = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE1);
 		right2 = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE2);
-		middle = new PWMVictorSPX(RobotMap.MIDDLE_DRIVE);
+		middle1 = new WPI_TalonSRX(RobotMap.MIDDLE_DRIVE1);
+		middle2 = new WPI_TalonSRX(RobotMap.MIDDLE_DRIVE2);
     	
-    	left1.configOpenloopRamp(2, 0);
-    	left2.configOpenloopRamp(2, 0);
-    	right1.configOpenloopRamp(2, 0);
-    	right2.configOpenloopRamp(2, 0);
+    	left1.configOpenloopRamp(rampTime, 0);
+    	left2.configOpenloopRamp(rampTime, 0);
+    	right1.configOpenloopRamp(rampTime, 0);
+		right2.configOpenloopRamp(rampTime, 0);
+		
     	
     	left1.setNeutralMode(NeutralMode.Coast);
     	left2.setNeutralMode(NeutralMode.Coast);
@@ -95,7 +97,8 @@ public class DriveTrain extends Subsystem {
     	left2.set(leftPower);
     	right1.set(-rightPower);
     	right2.set(-rightPower);
-		middle.set(-middlePower);
+		middle1.set(-middlePower);
+		middle2.set(-middlePower);
     }
     
     /**
