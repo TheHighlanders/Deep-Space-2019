@@ -120,6 +120,13 @@ public class OI {
 		joystickButtons[5].whileHeld(new ClimberBackExtendCmd());
 		joystickButtons[6].whileHeld(new ClimberBackRetractCmd());
 		
+		joystickButtons[7].whileHeld(new AutoDropoffCmd());
+
+		joystickButtons[8].whenPressed(new ManualHatchPickupCmdGroup());
+		joystickButtons[9].whenPressed(new ManualHatchDropoffCmdGroup());
+
+		joystickButtons[10].whileHeld(new ElevatorAscendCmd());
+		joystickButtons[11].whileHeld(new ElevatorDescendCmd());
 		
 		
 	}

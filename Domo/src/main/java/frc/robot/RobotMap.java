@@ -25,11 +25,26 @@ public class RobotMap {
 	public static final int MIDDLE_DRIVE1 = 5;
 	public static final int MIDDLE_DRIVE2 = 6;
 
+	// Climber CAN ports
+	public static final int FRONT_CLIMBER = 7;
+	public static final int BACK_CLIMBER1 = 8;
+	public static final int BACK_CLIMBER2 = 9;
+
+	//Elevator CAN ports
+	public static final int ELEVATOR1 = 7;
+	public static final int ELEVATOR2 = 8;
+
+	//Pneumatic solenoid ports in PCM (Pneumatics Control Module)
+	public static final int EXTENDER1 = 1;
+	public static final int EXTENDER2 = 2;
+	public static final int EXPANDER1 = 3;
+	public static final int EXPANDER2 = 4;
 	
-	// Sensors
 	
-	//X Box
+	//X Box controller laptop port
 	public static final int XBOX = 0;
+
+	//Joystick controller laptop port
 	public static final int LOGITECH = 1;
 	// public static final int XBOX_Z_AXIS = 2;
 }

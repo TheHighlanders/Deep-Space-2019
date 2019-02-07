@@ -9,15 +9,15 @@ package frc.robot;
 
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Climber;
-import frc.robot.grip.JavaPipeline;
+import frc.robot.grip.VisionProcessing;
+import frc.robot.subsystems.Grabber;
+import frc.robot.subsystems.Elevator;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.VisionThread;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -39,15 +39,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
  * 
  * @author Max Nadeau
  */
-public class Robot extends IterativeRobot {
+public class Robot extends TimedRobot {
 	
 
-	private static final int IMG_WIDTH = 320;
-	private static final int IMG_HEIGHT = 240;
-	
-	private VisionThread visionThread;
-	
-	private final Object imgLock = new Object();
 
 	/**
 	 * Creates a DriveTrain subsystem object which enables moving the robot
@@ -56,13 +50,20 @@ public class Robot extends IterativeRobot {
 	public static final DriveTrain dt = new DriveTrain();
 		
 	public static final Climber cl = new Climber();
+
+	public static final Grabber gr = new Grabber();
+
+	public static final Elevator el = new Elevator();
+
+
 	/**
 	 * Declare the Operator Interface object. DO NOT initialize it here; that
 	 * would cause No Robot Code to occur.
 	 */
 	public static OI oi;
 
-	Thread m_visionThread;
+
+	public static VisionProcessing vp;
 	
 	/**
 	 * TalonSRX CAN Port Assignments:
@@ -92,43 +93,8 @@ public class Robot extends IterativeRobot {
 		//SmartDashboard.putNumber("TurboSpeed", 0.95);
 		DriverStation.reportWarning("Robot Initiated", false);
 
-		m_visionThread = new Thread(() -> {
-			// Get the Axis camera from CameraServer
-			AxisCamera camera
-				= CameraServer.getInstance().addAxisCamera("10.62.1.15");
-			// Set the resolution
-			camera.setResolution(640, 480);
-	  
-			// Get a CvSink. This will capture Mats from the camera
-			CvSink cvSink = CameraServer.getInstance().getVideo();
-			// Setup a CvSource. This will send images back to the Dashboard
-			CvSource outputStream
-				= CameraServer.getInstance().putVideo("Rectangle", 640, 480);
-	  
-			// Mats are very memory expensive. Lets reuse this Mat.
-			Mat mat = new Mat();
-	  
-			// This cannot be 'true'. The program will never exit if it is. This
-			// lets the robot stop this thread when restarting robot code or
-			// deploying.
-			while (!Thread.interrupted()) {
-			  // Tell the CvSink to grab a frame from the camera and put it
-			  // in the source mat.  If there is an error notify the output.
-			  if (cvSink.grabFrame(mat) == 0) {
-				// Send the output the error.
-				outputStream.notifyError(cvSink.getError());
-				// skip the rest of the current iteration
-				continue;
-			  }
-			  // Put a rectangle on the image
-			  Imgproc.rectangle(mat, new Point(50, 50), new Point(150, 150),
-				  new Scalar(255, 255, 255), 5);
-			  // Give the output stream a new image to display
-			  outputStream.putFrame(mat);
-			}
-		  });
-		  m_visionThread.setDaemon(true);
-		  m_visionThread.start();
+		vp = new VisionProcessing();
+
 
 	}
 	

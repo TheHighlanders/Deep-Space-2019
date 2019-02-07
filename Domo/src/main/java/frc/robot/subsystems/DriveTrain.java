@@ -99,6 +99,8 @@ public class DriveTrain extends Subsystem {
     	right2.set(-rightPower);
 		middle1.set(-middlePower);
 		middle2.set(-middlePower);
+
+		DriverStation.reportWarning("Left: " + leftPower + " Right: " + rightPower + " Middle: " + middlePower, false); 
     }
     
     /**
