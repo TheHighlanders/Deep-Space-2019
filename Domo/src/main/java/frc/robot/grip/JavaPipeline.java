@@ -47,8 +47,9 @@ public class JavaPipeline {
 		int cvResizeInterpolation = Imgproc.INTER_LINEAR;
 		cvResize(cvResizeSrc, cvResizeDsize, cvResizeFx, cvResizeFy, cvResizeInterpolation, cvResizeOutput);
 
-		// Step Blur0:
+		// // Step Blur0:
 		Mat blurInput = cvResizeOutput;
+		//Mat blurInput = source0;
 		BlurType blurType = BlurType.get("Box Blur");
 		double blurRadius = 3.6036036036036;
 		blur(blurInput, blurType, blurRadius, blurOutput);

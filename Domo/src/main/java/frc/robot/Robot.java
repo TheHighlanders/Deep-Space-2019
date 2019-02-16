@@ -93,7 +93,8 @@ public class Robot extends TimedRobot {
 		//SmartDashboard.putNumber("TurboSpeed", 0.95);
 		DriverStation.reportWarning("Robot Initiated", false);
 
-		vp = new VisionProcessing();
+
+		//vp = new VisionProcessing();
 
 
 	}

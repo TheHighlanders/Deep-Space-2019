@@ -115,18 +115,21 @@ public class OI {
 			xboxButtons[i] = new JoystickButton(xbox, i);
 			
 		}
-		joystickButtons[3].whileHeld(new ClimberFrontExtendCmd());
-		joystickButtons[4].whileHeld(new ClimberFrontRetractCmd());
-		joystickButtons[5].whileHeld(new ClimberBackExtendCmd());
-		joystickButtons[6].whileHeld(new ClimberBackRetractCmd());
+		joystickButtons[3].whileHeld(new ClimberCmd('f', 1));
+		joystickButtons[4].whileHeld(new ClimberCmd('f', -1));
+		joystickButtons[5].whileHeld(new ClimberCmd('b', 1));
+		joystickButtons[6].whileHeld(new ClimberCmd('b', -1));
 		
-		joystickButtons[7].whileHeld(new AutoDropoffCmd());
+		joystickButtons[7].whenPressed(new DriveIntoWallCmd());
 
 		joystickButtons[8].whenPressed(new ManualHatchPickupCmdGroup());
 		joystickButtons[9].whenPressed(new ManualHatchDropoffCmdGroup());
 
-		joystickButtons[10].whileHeld(new ElevatorAscendCmd());
-		joystickButtons[11].whileHeld(new ElevatorDescendCmd());
+		//joystickButtons[10].whileHeld(new ElevatorCmd(1));
+		//joystickButtons[11].whileHeld(new ElevatorCmd(-1));
+		joystickButtons[11].whileHeld(new LineFollowCmd());
+
+		joystickButtons[12].whenPressed(new TurnAngleCmd(90, 5));
 		
 		
 	}

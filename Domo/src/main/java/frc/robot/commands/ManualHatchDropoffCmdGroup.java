@@ -22,9 +22,9 @@ public class ManualHatchDropoffCmdGroup extends CommandGroup {
     // these will run in order.
 
 
-    addSequential(new ExtendCmd());
-    addSequential(new ReleaseCmd());
-    addSequential(new RetractCmd());
+    addSequential(new GrabberMoverCmd(1));
+    addSequential(new GrabberCmd(-1));
+    addSequential(new GrabberMoverCmd(-1));
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());

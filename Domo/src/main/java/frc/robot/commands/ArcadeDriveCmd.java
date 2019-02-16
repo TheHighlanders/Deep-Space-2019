@@ -64,8 +64,8 @@ public class ArcadeDriveCmd extends Command {
 		double moveY = Robot.oi.getXboxLeftY();
 		double turnX = Robot.oi.getXboxRightX();
 
-		processedX = scaledValTan(moveX, TANDOMAIN_X) * 0.9;
-		processedY = scaledValTan(moveY, TANDOMAIN_Y) * 0.9 + ANTIDRIFTCOEF * processedX;
+		processedX = -1 * scaledValTan(moveX, TANDOMAIN_X) * 0.9;
+		processedY = -1 * scaledValTan(moveY, TANDOMAIN_Y) * 0.9 + ANTIDRIFTCOEF * processedX;
 
 		//This multiplication prevents output from exceeding (-1, 1)
 
@@ -80,9 +80,9 @@ public class ArcadeDriveCmd extends Command {
 		DriverStation.reportWarning("moveX (left X): " + moveX,  false);
     	DriverStation.reportWarning("moveY (left Y): " + moveY, false);
     	DriverStation.reportWarning("turnX (right X): " + turnX, false); */
-		DriverStation.reportWarning("Processed X: " + processedX, false);
+		/* DriverStation.reportWarning("Processed X: " + processedX, false);
 		DriverStation.reportWarning("Processed Y: " + processedY, false);
-    	DriverStation.reportWarning("Processed Turn: " + processedTurn, false);
+    	DriverStation.reportWarning("Processed Turn: " + processedTurn, false); */
     	//DriverStation.reportWarning("Scaled Val Turn: " + scaledValTan(joystickX * joystickSlider, TANDOMAIN_X), false);
     	//DriverStation.reportWarning("Scaled Val Power: " + scaledValTan(joystickY * joystickSlider, TANDOMAIN_Y), false);
    	

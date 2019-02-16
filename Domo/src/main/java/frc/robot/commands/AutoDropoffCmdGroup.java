@@ -8,12 +8,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.DriverStation;
 
-public class ManualHatchPickupCmdGroup extends CommandGroup {
+public class AutoDropoffCmdGroup extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public ManualHatchPickupCmdGroup() {
+
+NetworkTableEntry angle1;
+NetworkTableEntry angle2;
+NetworkTableEntry avgx;
+  public AutoDropoffCmdGroup() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
@@ -25,14 +33,14 @@ public class ManualHatchPickupCmdGroup extends CommandGroup {
     // addSequential(new Command2());
     // Command1 and Command2 will run in parallel.
 
-    addSequential(new GrabberMoverCmd(1));
-    addSequential(new GrabberCmd(1));
-    addSequential(new GrabberMoverCmd(-1));
-
     // A command group will require all of the subsystems that each member
     // would require.
     // e.g. if Command1 requires chassis, and Command2 requires arm,
     // a CommandGroup containing them would require both the chassis and the
     // arm.
+ 
+    addSequential(new AlignCmd(10));
+    //addSequential(new DriveIntoWallCmd());
+    //addSequential(new ManualHatchDropoffCmdGroup());
   }
 }

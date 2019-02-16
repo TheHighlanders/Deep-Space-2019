@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import com.analog.adis16448.frc.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -34,7 +35,7 @@ public class DriveTrain extends Subsystem {
 	public WPI_TalonSRX middle2;
 		
 	// Gyro sensor
-	private ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	
 	public static int forwardOrReverse = -1;
 
@@ -49,14 +50,15 @@ public class DriveTrain extends Subsystem {
     	left1 = new WPI_TalonSRX(RobotMap.LEFT_DRIVE1);
     	left2 = new WPI_TalonSRX(RobotMap.LEFT_DRIVE2);
     	right1 = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE1);
-		right2 = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE2);
-		middle1 = new WPI_TalonSRX(RobotMap.MIDDLE_DRIVE1);
-		middle2 = new WPI_TalonSRX(RobotMap.MIDDLE_DRIVE2);
+			right2 = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE2);
+			middle1 = new WPI_TalonSRX(RobotMap.MIDDLE_DRIVE1);
+			middle2 = new WPI_TalonSRX(RobotMap.MIDDLE_DRIVE2);
+
     	
     	left1.configOpenloopRamp(rampTime, 0);
     	left2.configOpenloopRamp(rampTime, 0);
     	right1.configOpenloopRamp(rampTime, 0);
-		right2.configOpenloopRamp(rampTime, 0);
+			right2.configOpenloopRamp(rampTime, 0);
 		
     	
     	left1.setNeutralMode(NeutralMode.Coast);
@@ -97,10 +99,10 @@ public class DriveTrain extends Subsystem {
     	left2.set(leftPower);
     	right1.set(-rightPower);
     	right2.set(-rightPower);
-		middle1.set(-middlePower);
-		middle2.set(-middlePower);
+			middle1.set(-middlePower);
+			middle2.set(-middlePower);
 
-		DriverStation.reportWarning("Left: " + leftPower + " Right: " + rightPower + " Middle: " + middlePower, false); 
+		//DriverStation.reportWarning("Left: " + leftPower + " Right: " + rightPower + " Middle: " + middlePower, false); 
     }
     
     /**
