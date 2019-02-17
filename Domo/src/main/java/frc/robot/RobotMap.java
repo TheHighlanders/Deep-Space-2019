@@ -39,6 +39,8 @@ public class RobotMap {
 	public static final int EXTENDER2 = 2;
 	public static final int EXPANDER1 = 3;
 	public static final int EXPANDER2 = 4;
+
+	/* CLIMBER WHEELS? ~ Iskandar Nazhar*/
 	
 	
 	//X Box controller laptop port

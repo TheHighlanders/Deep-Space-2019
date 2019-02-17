@@ -9,6 +9,7 @@ package frc.robot;
 
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberWheels;
 import frc.robot.grip.VisionProcessing;
 import frc.robot.subsystems.Grabber;
 import frc.robot.subsystems.Elevator;
@@ -54,6 +55,8 @@ public class Robot extends TimedRobot {
 	public static final Grabber gr = new Grabber();
 
 	public static final Elevator el = new Elevator();
+
+	public static final ClimberWheels cw = new ClimberWheels();
 
 
 	/**
