@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 import frc.robot.Robot;
 
-public class GrabberCmd extends Command {
+public class GrabberExpanderCmd extends Command {
     int dir;
-    public GrabberCmd(int dir) {
+    public GrabberExpanderCmd(int dir) {
         requires(Robot.gr);
         this.dir = dir;
     }
@@ -21,8 +21,8 @@ public class GrabberCmd extends Command {
     // Called just before this Command runs the first time
     @Override
     protected void initialize() {
-        if( dir != 1 && dir != -1){
-            DriverStation.reportWarning("Dir parameter must be 1 (Grab) or -1 (Release).", false);
+        if( dir != 1 && dir != -1 && dir != 0){
+            DriverStation.reportWarning("Dir parameter must be 1 (Grab), -1 (Release), or 0 (Toggle)", false);
             end();
         }
     }
@@ -33,8 +33,11 @@ public class GrabberCmd extends Command {
         if(dir == 1){
             Robot.gr.grab();
         }
-        else{
+        else if(dir == -1){
             Robot.gr.release();
+        }
+        else{
+            Robot.gr.toggleExpander();
         }
     }
 

@@ -26,13 +26,15 @@ public class RobotMap {
 	public static final int MIDDLE_DRIVE2 = 4;
 
 	// Climber CAN ports
-	public static final int FRONT_CLIMBER = 7;
-	public static final int BACK_CLIMBER1 = 8;
-	public static final int BACK_CLIMBER2 = 9;
+	public static final int BACK_CLIMBER = 7;
+	public static final int LEFT_CLIMBER = 8;
+	public static final int RIGHT_CLIMBER = 9;
 
-	//Elevator CAN ports
-	public static final int ELEVATOR1 = 7;
-	public static final int ELEVATOR2 = 8;
+	//Elevator PWM ports
+	public static final int ELEVATOR = 0;
+
+	//Climber Wheels PWM ports
+	public static final int CLIMBER_WHEELS = 0;
 
 	//Pneumatic solenoid ports in PCM (Pneumatics Control Module)
 	public static final int EXTENDER1 = 1;
@@ -40,11 +42,9 @@ public class RobotMap {
 	public static final int EXPANDER1 = 3;
 	public static final int EXPANDER2 = 4;
 	
-	
 	//X Box controller laptop port
 	public static final int XBOX = 0;
 
 	//Joystick controller laptop port
 	public static final int LOGITECH = 1;
-	// public static final int XBOX_Z_AXIS = 2;
 }

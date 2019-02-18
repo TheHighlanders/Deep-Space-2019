@@ -10,28 +10,24 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
+public class ClimberWheelArcadeDriveCmd extends Command {
+  
+  private final double TANDOMAIN = 1.3;
+  private double input;
+  private double processedPower;
 
-public class LineFollowCmd extends Command {
-  NetworkTableEntry angle1;
-  NetworkTableEntry angle2;
-  NetworkTableEntry avgx;
+  
+  /*
+	 * Defines a tangent curve that goes from (-1, -1) to (1, 1)
+	 * domain defines the curviness of the tan curve
+	 *
+	 */
+	private double scaledValTan(double rawVal, double domain) {
+		return Math.tan(rawVal * domain) / (Math.tan(domain));
+	}
 
-  double angle1i;
-  double angle2i;
-  double avgxi;
-
-
-  public LineFollowCmd() {
-    requires(Robot.dt);
-    NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    NetworkTable visionTable = inst.getTable("visionTable");
-    angle1 = visionTable.getEntry("angle1");
-    angle2 = visionTable.getEntry("angle2");
-    avgx = visionTable.getEntry("avgx");
+  public ClimberWheelArcadeDriveCmd() {
+    requires(Robot.cw);
   }
 
   // Called just before this Command runs the first time
@@ -42,13 +38,9 @@ public class LineFollowCmd extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-
-    angle1i = angle1.getDouble(1000);
-    angle2i = angle2.getDouble(1000);
-    avgxi = avgx.getDouble(1000);
-
-    Robot.dt.drive(0.2 + avgxi/800, 0.2 -  avgxi/800, 0);
-    DriverStation.reportWarning("Left: " + (0.2 + avgxi/800) + " Right: " + (0.2 -  avgxi/800), false);
+    input = Robot.oi.getJoysticktY();
+    processedPower = scaledValTan(input, TANDOMAIN) * 0.9;
+    Robot.cw.drive(processedPower);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -60,7 +52,6 @@ public class LineFollowCmd extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.dt.stop();
   }
 
   // Called when another command which requires one or more of the same

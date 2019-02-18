@@ -8,47 +8,51 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 import edu.wpi.first.wpilibj.DriverStation;
+
 import frc.robot.Robot;
 
-public class ElevatorCmd extends Command {
-  
+public class GrabberExtenderCmd extends Command {
   int dir;
-  public ElevatorCmd(int dir) {
-      requires(Robot.el);
+  public GrabberExtenderCmd(int dir) {
+      requires(Robot.gr);
       this.dir = dir;
+
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if( dir != 1 && dir != -1){
-      DriverStation.reportWarning("Dir parameter must be 1 (ascend) or -1 (descend).", false);
-      end();
+    if( dir != 1 && dir != -1 && dir != 0){
+        DriverStation.reportWarning("Dir parameter must be 1 (Extend), -1 (Retract), or 0 (Toggle)", false);
+        end();
     }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(dir == 1){
-      Robot.el.ascend();
-    }
-    else{
-      Robot.el.descend();
-    }
+      if(dir == 1){
+          Robot.gr.extend();
+      }
+      else if(dir == -1){
+          Robot.gr.retract();
+      }
+      else{
+          Robot.gr.toggleExtender();
+      }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+      return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.el.stop();
   }
 
   // Called when another command which requires one or more of the same

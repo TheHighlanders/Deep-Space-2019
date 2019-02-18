@@ -6,50 +6,49 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-
-import edu.wpi.first.wpilibj.command.Command;
-
-import edu.wpi.first.wpilibj.DriverStation;
-
 import frc.robot.Robot;
 
-public class GrabberMoverCmd extends Command {
-  int dir;
-  public GrabberMoverCmd(int dir) {
-      requires(Robot.gr);
-      this.dir = dir;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.DriverStation;
 
+public class ClimberBackCmd extends Command {
+  private int dir;
+
+  public ClimberBackCmd(int dir) {
+    requires(Robot.cb);
+    this.dir = dir;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if( dir != 1 && dir != -1){
+      if( dir != 1 && dir != -1){
         DriverStation.reportWarning("Dir parameter must be 1 (extend) or -1 (retract).", false);
         end();
-    }
+      }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
-      if(dir == 1){
-          Robot.gr.extend();
-      }
-      else{
-          Robot.gr.retract();
-      }
+  protected void execute() { 
+    if(dir == 1){
+      Robot.cb.move(0.9);
+    }
+    else{
+      Robot.cb.move(-0.9);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-      return true;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+      Robot.cb.move(0);
   }
 
   // Called when another command which requires one or more of the same

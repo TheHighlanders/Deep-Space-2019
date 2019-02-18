@@ -71,6 +71,12 @@ public class ArcadeDriveCmd extends Command {
 
 		
 		processedTurn = (1 - Math.abs(processedY)) * scaledValTan(turnX, TANDOMAIN_TURN);
+
+		if(Robot.oi.xboxButtons[9].get()){
+			processedTurn *= 0.4;
+			processedY *= 0.4;
+			processedX *= 0.4;
+		}
 	
    	
     	/* DriverStation.reportWarning("Left X: " + Robot.oi.getXboxLeftX(), false);

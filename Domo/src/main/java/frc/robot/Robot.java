@@ -8,10 +8,13 @@
 package frc.robot;
 
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberLeft;
+import frc.robot.subsystems.ClimberRight;
+import frc.robot.subsystems.ClimberBack;
 import frc.robot.grip.VisionProcessing;
 import frc.robot.subsystems.Grabber;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.ClimberWheels;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
@@ -49,11 +52,17 @@ public class Robot extends TimedRobot {
 	 */
 	public static final DriveTrain dt = new DriveTrain();
 		
-	public static final Climber cl = new Climber();
+	public static final ClimberLeft cl = new ClimberLeft();
+
+	public static final ClimberRight cr = new ClimberRight();
+
+	public static final ClimberBack cb = new ClimberBack();
 
 	public static final Grabber gr = new Grabber();
 
 	public static final Elevator el = new Elevator();
+
+	public static final ClimberWheels cw = new ClimberWheels();
 
 
 	/**
@@ -134,6 +143,8 @@ public class Robot extends TimedRobot {
  		dt.resetGyro();
  		dt.setEncoders(0);
 		dt.stop();
+		gr.retract();
+		gr.release();
 	}
 
 	/**
@@ -143,6 +154,11 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		
 		Scheduler.getInstance().run();
+
+		DriverStation.reportWarning("Compressor Enabled: " + gr.c.enabled(), false);
+		DriverStation.reportWarning("Compressor Pressure switch value: " + gr.c.getPressureSwitchValue(), false);
+		DriverStation.reportWarning("Compressor current: " + gr.c.getCompressorCurrent(), false);
+
 		
 		//DriverStation.reportWarning("DIO Port 1: " + el.magEnc.get(), false);
 		//DriverStation.reportWarning("Min Switch: " + el.minSwitchTriggered(), false);

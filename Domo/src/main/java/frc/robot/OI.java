@@ -31,15 +31,19 @@ public class OI {
 	 */
 
 
-	public Button[] xboxButtons = new Button[7];
+	public Button[] xboxButtons = new Button[11];
 	public Button[] joystickButtons = new Button[13];
 	private Joystick logitech = new Joystick(RobotMap.LOGITECH);
 	private XboxController xbox = new XboxController(RobotMap.XBOX);
-	
-	private Button lb = new JoystickButton(xbox,5);
-	private Button rb = new JoystickButton(xbox, 6);
-	private Button bpress = new JoystickButton(xbox,10);
-	private Button y = new JoystickButton(xbox,4);
+
+	/**
+	 * @return a double corresponding to the position of the Xbox controller's left 
+	 * joystick in the side to side direction (X axis).
+	 * Range of -1 to 1. All the way to the right is +1.
+	 */
+	public double getJoysticktY() {
+		return logitech.getY();
+	}
 
 	/**
 	 * @return a double corresponding to the position of the Xbox controller's left 
@@ -47,9 +51,7 @@ public class OI {
 	 * Range of -1 to 1. All the way to the right is +1.
 	 */
 	public double getXboxLeftX() {
-		
 		return xbox.getX(GenericHID.Hand.kLeft);
-		
 	}
 	
 	/**
@@ -58,9 +60,7 @@ public class OI {
 	 * Range of -1 to 1. All the way forward is +1.
 	 */
 	public double getXboxLeftY() {
-		
 		return xbox.getY(GenericHID.Hand.kLeft);
-		
 	}
 	
 	/**
@@ -69,67 +69,67 @@ public class OI {
 	 * Range of -1 to 1. All the way to the right is +1.
 	 */
 	public double getXboxRightX() {
-		
 		return xbox.getX(GenericHID.Hand.kRight);
-		
 	}
+
 	/**
 	 * @return a double corresponding to the position of the Xbox controller's right 
 	 * joystick in the front-back direction (Y axis).
 	 * Range of -1 to 1. All the way forward is +1.
 	 */
 	public double getXboxRightY() {
-		
 		return xbox.getY(GenericHID.Hand.kRight);
-		
 	}
 
+	/**
+	 * @return a double corresponding to the position of the Xbox controller's right 
+	 * trigger 
+	 * Range of 0 to 1. All the way pressed is 1.
+	 */
+	public double getXboxRightTrigger() {
+		return xbox.getTriggerAxis(GenericHID.Hand.kRight);
+	}
+
+	/**
+	 * @return a double corresponding to the position of the Xbox controller's left 
+	 * trigger 
+	 * Range of 0 to 1. All the way pressed is 1.
+	 */
+	public double getXboxLeftTrigger() {
+		return xbox.getTriggerAxis(GenericHID.Hand.kRight);
+	}
 	
-	
-	//X Box buttons
-		public boolean getButtonlb() {
-			return lb.get();
-		}
-		
-		public boolean getButtonrb() {
-			return rb.get();
-		}
-		
-		public boolean getButtonbpress() {
-			return bpress.get();
-		}
-		
-		public boolean getButtony() {
-			return y.get();
-		}
-	
+
 	public OI() {
 		for(int i = 1; i < joystickButtons.length; i++) {
-			
 			joystickButtons[i] = new JoystickButton(logitech, i);
-			
 		}
 
 		for(int i = 1; i < xboxButtons.length; i++) {
-			
-			xboxButtons[i] = new JoystickButton(xbox, i);
-			
+			xboxButtons[i] = new JoystickButton(xbox, i);	
 		}
-		joystickButtons[3].whileHeld(new ClimberCmd('f', 1));
-		joystickButtons[4].whileHeld(new ClimberCmd('f', -1));
-		joystickButtons[5].whileHeld(new ClimberCmd('b', 1));
-		joystickButtons[6].whileHeld(new ClimberCmd('b', -1));
+
+
+		xboxButtons[5].whenPressed(new GrabberExtenderCmd(0));
+		xboxButtons[6].whenPressed(new GrabberExpanderCmd(0));
+
+
+		// joystickButtons[3].whileHeld(new ClimberCmd('f', 1));
+		// joystickButtons[4].whileHeld(new ClimberCmd('f', -1));
+		// joystickButtons[5].whileHeld(new ClimberCmd('b', 1));
+		// joystickButtons[6].whileHeld(new ClimberCmd('b', -1));
+		joystickButtons[3].whileHeld(new GrabberExtenderCmd(1));
+		joystickButtons[4].whileHeld(new GrabberExtenderCmd(-1));
+		joystickButtons[5].whileHeld(new GrabberExpanderCmd(1));
+		joystickButtons[6].whileHeld(new GrabberExpanderCmd(-1));
 		
-		joystickButtons[7].whenPressed(new DriveIntoWallCmd());
-
-		joystickButtons[8].whenPressed(new ManualHatchPickupCmdGroup());
-		joystickButtons[9].whenPressed(new ManualHatchDropoffCmdGroup());
-
-		//joystickButtons[10].whileHeld(new ElevatorCmd(1));
-		//joystickButtons[11].whileHeld(new ElevatorCmd(-1));
-		joystickButtons[11].whileHeld(new LineFollowCmd());
-
-		joystickButtons[12].whenPressed(new TurnAngleCmd(90, 5));
+		joystickButtons[7].whileHeld(new ClimberLeftCmd(1));
+		joystickButtons[8].whileHeld(new ClimberLeftCmd(-1));
+		joystickButtons[9].whileHeld(new ClimberRightCmd(1));
+		joystickButtons[10].whileHeld(new ClimberRightCmd(-1));
+		joystickButtons[11].whileHeld(new ClimberBackCmd(1));
+		joystickButtons[11].whileHeld(new ClimberBackCmd(-1));
+		
 		
 		
 	}

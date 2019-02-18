@@ -6,49 +6,37 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-
-import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 
-public class LineFollowCmd extends Command {
-  NetworkTableEntry angle1;
-  NetworkTableEntry angle2;
-  NetworkTableEntry avgx;
+public class ClimberLeftCmd extends Command {
+  private int dir;
 
-  double angle1i;
-  double angle2i;
-  double avgxi;
-
-
-  public LineFollowCmd() {
-    requires(Robot.dt);
-    NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    NetworkTable visionTable = inst.getTable("visionTable");
-    angle1 = visionTable.getEntry("angle1");
-    angle2 = visionTable.getEntry("angle2");
-    avgx = visionTable.getEntry("avgx");
+  public ClimberLeftCmd(int dir) {
+    requires(Robot.cl);
+    this.dir = dir;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+      if( dir != 1 && dir != -1){
+        DriverStation.reportWarning("Dir parameter must be 1 (extend) or -1 (retract).", false);
+        end();
+      }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
-
-    angle1i = angle1.getDouble(1000);
-    angle2i = angle2.getDouble(1000);
-    avgxi = avgx.getDouble(1000);
-
-    Robot.dt.drive(0.2 + avgxi/800, 0.2 -  avgxi/800, 0);
-    DriverStation.reportWarning("Left: " + (0.2 + avgxi/800) + " Right: " + (0.2 -  avgxi/800), false);
+  protected void execute() { 
+    if(dir == 1){
+      Robot.cl.move(0.9);
+    }
+    else{
+      Robot.cl.move(-0.9);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -60,7 +48,7 @@ public class LineFollowCmd extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.dt.stop();
+      Robot.cl.move(0);
   }
 
   // Called when another command which requires one or more of the same

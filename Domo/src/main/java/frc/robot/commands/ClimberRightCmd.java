@@ -11,25 +11,17 @@ import frc.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.DriverStation;
 
-public class ClimberCmd extends Command {
-
-  private char side;
-
+public class ClimberRightCmd extends Command {
   private int dir;
 
-  public ClimberCmd(char side, int dir) {
-    requires(Robot.cl);
-    this.side = side;
+  public ClimberRightCmd(int dir) {
+    requires(Robot.cr);
     this.dir = dir;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-      if( side != 'f' && side != 'b'){
-        DriverStation.reportWarning("Side parameter must be f (front) or b (back).", false);
-        end();
-      }
       if( dir != 1 && dir != -1){
         DriverStation.reportWarning("Dir parameter must be 1 (extend) or -1 (retract).", false);
         end();
@@ -39,21 +31,11 @@ public class ClimberCmd extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() { 
-    if(side == 'f'){
-      if(dir == 1){
-        Robot.cl.moveFront(0.9);
-      }
-      else{
-        Robot.cl.moveFront(-0.9);
-      }
+    if(dir == 1){
+      Robot.cr.move(0.9);
     }
     else{
-      if(dir == 1){
-        Robot.cl.moveBack(0.9);
-      }
-      else{
-        Robot.cl.moveBack(-0.9);
-      }
+      Robot.cr.move(-0.9);
     }
   }
 
@@ -66,12 +48,7 @@ public class ClimberCmd extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    if(side == 'f'){
-        Robot.cl.moveFront(0);
-    }
-    else{
-        Robot.cl.moveBack(0);
-    }
+      Robot.cr.move(0);
   }
 
   // Called when another command which requires one or more of the same

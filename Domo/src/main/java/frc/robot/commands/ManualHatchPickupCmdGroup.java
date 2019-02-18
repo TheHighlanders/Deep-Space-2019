@@ -25,9 +25,9 @@ public class ManualHatchPickupCmdGroup extends CommandGroup {
     // addSequential(new Command2());
     // Command1 and Command2 will run in parallel.
 
-    addSequential(new GrabberMoverCmd(1));
-    addSequential(new GrabberCmd(1));
-    addSequential(new GrabberMoverCmd(-1));
+    addSequential(new GrabberExtenderCmd(1));
+    addSequential(new GrabberExpanderCmd(1));
+    addSequential(new GrabberExtenderCmd(-1));
 
     // A command group will require all of the subsystems that each member
     // would require.

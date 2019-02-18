@@ -87,10 +87,10 @@ public class TurnAngleCmd extends Command {
       //DriverStation.reportWarning("turnSpeed: " +turnSpeed + ", currentAngleOffset: " +currentAngleOffset, false);
 			if(currentAngleOffset < 0) {
           
-	    		Robot.dt.drive(-0.15, 0.15, 0);
+	    		Robot.dt.drive(-0.18, 0.18, 0);
       } 
       else if(currentAngleOffset > 0) {
-	    	  Robot.dt.drive(0.15, -0.15, 0);	
+	    	  Robot.dt.drive(0.18, -0.18, 0);	
 	    }
 				
 		}

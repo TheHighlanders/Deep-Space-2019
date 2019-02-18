@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Compressor;
 
 import frc.robot.RobotMap;
 
@@ -20,26 +21,52 @@ public class Grabber extends Subsystem {
   // here. Call these from Commands.
   public DoubleSolenoid extender;
   public DoubleSolenoid expander;
+  public Compressor c;
+
+  public boolean extenderPos = false;
+  public boolean expanderPos = false;
 
 
   public Grabber(){
       extender = new DoubleSolenoid(RobotMap.EXTENDER1,RobotMap.EXTENDER2);
       expander = new DoubleSolenoid(RobotMap.EXPANDER1,RobotMap.EXPANDER2);
+      c = new Compressor(0);
+      c.setClosedLoopControl(true);
   }
 
   public void extend(){
       extender.set(DoubleSolenoid.Value.kForward);
+      extenderPos = true;
   }
   public void retract(){
       extender.set(DoubleSolenoid.Value.kReverse);
+      extenderPos = false;
   }
+  public void toggleExtender(){
+      if(extenderPos){
+          this.retract();
+      }
+      else{
+            this.extend();
+      }
+  }
+  
   public void grab(){
       expander.set(DoubleSolenoid.Value.kForward);
+      extenderPos = true;
   }
   public void release(){
       expander.set(DoubleSolenoid.Value.kReverse);
+      extenderPos = false;
   }
-
+  public void toggleExpander(){
+    if(expanderPos){
+        this.release();
+    }
+    else{
+        this.grab();
+    }
+}
 
   @Override
   public void initDefaultCommand() {
