@@ -43,6 +43,7 @@ public final float STOPPED_CURRENT = 5;
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.oi.setXboxRumble(1);
     Robot.dt.stop();
   }
 

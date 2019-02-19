@@ -52,18 +52,41 @@ public class Robot extends TimedRobot {
 	 */
 	public static final DriveTrain dt = new DriveTrain();
 		
+	/**
+	 * Creates a ClimberLeft subsystem object which moves the robot's left 
+	 * climber up and down.
+	 */
 	public static final ClimberLeft cl = new ClimberLeft();
 
+	/**
+	 * Creates a ClimberRight subsystem object which moves the robot's right 
+	 * climber up and down.
+	 */
 	public static final ClimberRight cr = new ClimberRight();
-
+	
+	/**
+	 * Creates a ClimberBack subsystem object which moves the robot's back 
+	 * climber up and down.
+	 */
 	public static final ClimberBack cb = new ClimberBack();
 
-	public static final Grabber gr = new Grabber();
-
-	public static final Elevator el = new Elevator();
-
+	/**
+	 * Creates an ClimberWheels subsystem object which controls the wheels 
+	 * on the bottom of the back climber.
+	 */
 	public static final ClimberWheels cw = new ClimberWheels();
 
+	/**
+	 * Creates a Grabber subsystem object which controls both the extender 
+	 * and the expander pneumatics.
+	 */
+	public static final Grabber gr = new Grabber();
+
+	/**
+	 * Creates an Elevator subsystem object which moves the elevator 
+	 * up and down.
+	 */
+	public static final Elevator el = new Elevator();
 
 	/**
 	 * Declare the Operator Interface object. DO NOT initialize it here; that
@@ -72,19 +95,8 @@ public class Robot extends TimedRobot {
 	public static OI oi;
 
 
+	//Defunct
 	public static VisionProcessing vp;
-	
-	/**
-	 * TalonSRX CAN Port Assignments:
-	 * 1 = rear left
-	 * 2 = front left
-	 * 3 = rear right
-	 * 4 = front right
-	 * 5 = gripper left
-	 * 6 = gripper right
-	 * 7 = elevator motor 1
-	 * 8 = elevator motor 2
-	 */
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -95,33 +107,19 @@ public class Robot extends TimedRobot {
 
 		oi = new OI();
 		dt.calibrateGyro();
-		
-		Robot.dt.left1.getSensorCollection().setPulseWidthPosition(0, 0);
-		Robot.dt.right1.getSensorCollection().setPulseWidthPosition(0, 0);
-		
-		//SmartDashboard.putNumber("TurboSpeed", 0.95);
+		//Resets encoders
+		dt.setEncoders(0);
 		DriverStation.reportWarning("Robot Initiated", false);
-
-
-		//vp = new VisionProcessing();
-
-
 	}
 	
 	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString line to get the auto name from the text box below the Gyro
 	 *
-	 * <p>You can add additional auto modes by adding additional comparisons to
-	 * the switch structure below with additional strings. If using the
-	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
 	@Override
 	public void autonomousInit() {
 		dt.resetGyro();
+		gr.grab();
+		gr.retract();
 	}
 
 	/**
@@ -135,16 +133,14 @@ public class Robot extends TimedRobot {
 	/**
 	 * Runs before teleop begins
 	 */
-	
 	@Override
 	public void teleopInit() {
 		DriverStation.reportWarning("Teleop Init!", false);
+		
+		//The Scheduler runs commands that are in motion and starts commands when triggered by buttons
 		Scheduler.getInstance().run();
  		dt.resetGyro();
  		dt.setEncoders(0);
-		dt.stop();
-		gr.retract();
-		gr.release();
 	}
 
 	/**
@@ -155,11 +151,9 @@ public class Robot extends TimedRobot {
 		
 		Scheduler.getInstance().run();
 
-		DriverStation.reportWarning("Compressor Enabled: " + gr.c.enabled(), false);
-		DriverStation.reportWarning("Compressor Pressure switch value: " + gr.c.getPressureSwitchValue(), false);
-		DriverStation.reportWarning("Compressor current: " + gr.c.getCompressorCurrent(), false);
-
-		
+		//DriverStation.reportWarning("Compressor Enabled: " + gr.c.enabled(), false);
+		//DriverStation.reportWarning("Compressor Pressure switch value: " + gr.c.getPressureSwitchValue(), false);
+		//DriverStation.reportWarning("Compressor current: " + gr.c.getCompressorCurrent(), false);
 		//DriverStation.reportWarning("DIO Port 1: " + el.magEnc.get(), false);
 		//DriverStation.reportWarning("Min Switch: " + el.minSwitchTriggered(), false);
 		//DriverStation.reportWarning("Encoder Revs: " + el.getEncoderRevs(), false);
@@ -186,9 +180,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		
-		dt.setEncoders(0);
-		
 		//DriverStation.reportWarning("DIO Port 1: " + el.magEnc.get(), false);
 		//DriverStation.reportWarning("Max Switch: " + el.maxSwitchTriggered(), false);
 		//DriverStation.reportWarning("Encoder Revs: " + el.getEncoderRevs(), false);

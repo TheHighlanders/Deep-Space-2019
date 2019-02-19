@@ -10,23 +10,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class TriggerElevatorCmd extends Command {
-
-  private final double TANDOMAIN = 1.3;
-  private double processedPower;
-  private double input;
-
-  /*
-	 * Defines a tangent curve that goes from (-1, -1) to (1, 1)
-	 * domain defines the curviness of the tan curve
-	 *
-	 */
-	private double scaledValTan(double rawVal, double domain) {
-		return Math.tan(rawVal * domain) / (Math.tan(domain));
-	}
-
-  public TriggerElevatorCmd() {
-    requires(Robot.el);
+public class AllClimbersCmd extends Command {
+  private double power;
+  public AllClimbersCmd(double power) {
+    requires(Robot.cl);
+    requires(Robot.cr);
+    requires(Robot.cb);
+    this.power = power;
   }
 
   // Called just before this Command runs the first time
@@ -37,12 +27,9 @@ public class TriggerElevatorCmd extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    input = Robot.oi.getXboxRightTrigger() - Robot.oi.getXboxLeftTrigger();
-    processedPower = scaledValTan(input, TANDOMAIN) * 0.9;
-    /*if(processedPower > -0.2 && processedPower < 0.2){
-      processedPower = 0.2;
-    }*/
-    Robot.el.actuate(processedPower);
+      Robot.cl.move(power);
+      Robot.cr.move(power);
+      Robot.cb.move(power);
   }
 
   // Make this return true when this Command no longer needs to run execute()

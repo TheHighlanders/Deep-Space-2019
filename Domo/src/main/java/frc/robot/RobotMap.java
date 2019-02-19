@@ -17,30 +17,30 @@ package frc.robot;
  */
 public class RobotMap {
 	
-	// Drive Train
-	public static final int LEFT_DRIVE1 = 1;
-	public static final int LEFT_DRIVE2 = 2;
-	public static final int RIGHT_DRIVE1 = 5;
-	public static final int RIGHT_DRIVE2 = 6;
-	public static final int MIDDLE_DRIVE1 = 3;
-	public static final int MIDDLE_DRIVE2 = 4;
+	// Drive Train CAN Ports
+	public static final int LEFT_DRIVE1 = 3;
+	public static final int LEFT_DRIVE2 = 13;
+	public static final int MIDDLE_DRIVE1 = 1;
+	public static final int MIDDLE_DRIVE2 = 11;
+	public static final int RIGHT_DRIVE1 = 2;
+	public static final int RIGHT_DRIVE2 = 12;
 
 	// Climber CAN ports
-	public static final int BACK_CLIMBER = 7;
-	public static final int LEFT_CLIMBER = 8;
-	public static final int RIGHT_CLIMBER = 9;
+	public static final int LEFT_CLIMBER = 4;
+	public static final int RIGHT_CLIMBER = 5;
+	public static final int BACK_CLIMBER = 6;
+	
+	//Climber Wheels CAN ports
+	public static final int CLIMBER_WHEELS = 22;
 
-	//Elevator PWM ports
-	public static final int ELEVATOR = 0;
-
-	//Climber Wheels PWM ports
-	public static final int CLIMBER_WHEELS = 0;
+	//Elevator CAN ports
+	public static final int ELEVATOR = 21;
 
 	//Pneumatic solenoid ports in PCM (Pneumatics Control Module)
-	public static final int EXTENDER1 = 1;
-	public static final int EXTENDER2 = 2;
-	public static final int EXPANDER1 = 3;
-	public static final int EXPANDER2 = 4;
+	public static final int EXTENDER1 = 0;
+	public static final int EXTENDER2 = 1;
+	public static final int EXPANDER1 = 2;
+	public static final int EXPANDER2 = 3;
 	
 	//X Box controller laptop port
 	public static final int XBOX = 0;

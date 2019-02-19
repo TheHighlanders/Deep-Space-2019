@@ -31,11 +31,11 @@ public class ClimberWheels extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   
-  public WPI_VictorSPX climberWheels; /* CHANGE MOTOR TYPE IF u WANT */
+  public WPI_TalonSRX climberWheels; /* CHANGE MOTOR TYPE IF u WANT */
   private static int rampTime = 1; /* What is ramp time? looks important */
 
   public ClimberWheels(){
-    climberWheels = new WPI_VictorSPX(RobotMap.CLIMBER_WHEELS);
+    climberWheels = new WPI_TalonSRX(RobotMap.CLIMBER_WHEELS);
     climberWheels.configOpenloopRamp(rampTime, 0);
     climberWheels.setNeutralMode(NeutralMode.Coast);
   }

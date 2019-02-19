@@ -10,11 +10,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class TriggerElevatorCmd extends Command {
+public class Strafe1Cmd extends Command {
 
-  private final double TANDOMAIN = 1.3;
-  private double processedPower;
   private double input;
+  private double processedX;
+  private double processedTurn;
+
+  private final double TAN_DOMAIN = 1.3;
+
+  private final double PROP_CON = 100;
 
   /*
 	 * Defines a tangent curve that goes from (-1, -1) to (1, 1)
@@ -23,26 +27,30 @@ public class TriggerElevatorCmd extends Command {
 	 */
 	private double scaledValTan(double rawVal, double domain) {
 		return Math.tan(rawVal * domain) / (Math.tan(domain));
-	}
+  }
+  
 
-  public TriggerElevatorCmd() {
-    requires(Robot.el);
+  public Strafe1Cmd() {
+    requires(Robot.dt);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.dt.calibrateGyro();
+    Robot.dt.resetGyro();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    input = Robot.oi.getXboxRightTrigger() - Robot.oi.getXboxLeftTrigger();
-    processedPower = scaledValTan(input, TANDOMAIN) * 0.9;
-    /*if(processedPower > -0.2 && processedPower < 0.2){
-      processedPower = 0.2;
-    }*/
-    Robot.el.actuate(processedPower);
+    input = Robot.oi.getXboxLeftX();
+    processedX = scaledValTan(input, TAN_DOMAIN);
+
+    processedTurn = Robot.dt.getGyroAngle() / PROP_CON;
+
+    Robot.dt.drive(processedTurn, -processedTurn, processedX);
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

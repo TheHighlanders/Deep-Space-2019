@@ -6,8 +6,8 @@ import frc.robot.commands.ArcadeDriveCmd;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -28,18 +28,18 @@ public class DriveTrain extends Subsystem {
 	// Instantiating TalonSRX motor controllers at CAN ports
 	// 1 through 4.
 	public WPI_TalonSRX left1;
-	private WPI_TalonSRX left2;
+	private WPI_VictorSPX left2;
 	public WPI_TalonSRX right1;
-	private WPI_TalonSRX right2;
+	private WPI_VictorSPX right2;
 	public WPI_TalonSRX middle1;
-	public WPI_TalonSRX middle2;
+	public WPI_VictorSPX middle2;
 		
 	// Gyro sensor
 	public static final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 	
 	public static int forwardOrReverse = -1;
 
-	private static int rampTime = 1;
+	private static double rampTime = 0.2;
 	
 	/**
 	 * Constructor, sets up motors, prevents brownouts, and minimizes pedestrian
@@ -48,26 +48,35 @@ public class DriveTrain extends Subsystem {
     public DriveTrain() {
     	
     	left1 = new WPI_TalonSRX(RobotMap.LEFT_DRIVE1);
-    	left2 = new WPI_TalonSRX(RobotMap.LEFT_DRIVE2);
+    	left2 = new WPI_VictorSPX(RobotMap.LEFT_DRIVE2);
     	right1 = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE1);
-			right2 = new WPI_TalonSRX(RobotMap.RIGHT_DRIVE2);
+			right2 = new WPI_VictorSPX(RobotMap.RIGHT_DRIVE2);
 			middle1 = new WPI_TalonSRX(RobotMap.MIDDLE_DRIVE1);
-			middle2 = new WPI_TalonSRX(RobotMap.MIDDLE_DRIVE2);
+			middle2 = new WPI_VictorSPX(RobotMap.MIDDLE_DRIVE2);
 
     	
     	left1.configOpenloopRamp(rampTime, 0);
     	left2.configOpenloopRamp(rampTime, 0);
     	right1.configOpenloopRamp(rampTime, 0);
 			right2.configOpenloopRamp(rampTime, 0);
+			middle1.configOpenloopRamp(rampTime, 0);
+			middle2.configOpenloopRamp(rampTime, 0);
 		
     	
     	left1.setNeutralMode(NeutralMode.Coast);
     	left2.setNeutralMode(NeutralMode.Coast);
     	right1.setNeutralMode(NeutralMode.Coast);
-    	right2.setNeutralMode(NeutralMode.Coast);
+			right2.setNeutralMode(NeutralMode.Coast);
+			middle1.setNeutralMode(NeutralMode.Coast);
+			middle2.setNeutralMode(NeutralMode.Coast);
+			
+			left2.follow(left1);
+			right2.follow(right1);
+			middle2.follow(middle1);
+
     	
-    	left1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
-    	right1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+    	//left1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+    	//right1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
     	
     }
     
@@ -162,11 +171,11 @@ public class DriveTrain extends Subsystem {
 	 */
     public void setEncoders(int pulses) {
     	
-    	left1.getSensorCollection().setPulseWidthPosition(pulses, 0);
-    	right1.getSensorCollection().setPulseWidthPosition(pulses, 0);
+    	//left1.getSensorCollection().setPulseWidthPosition(pulses, 0);
+			//right1.getSensorCollection().setPulseWidthPosition(pulses, 0);	
+			middle1.getSensorCollection().setPulseWidthPosition(pulses, 0);
     
-		//DriverStation.reportWarning("Right Drive Encoder:" + Robot.dt.right1.getSensorCollection().getPulseWidthPosition(), false);
-    	//DriverStation.reportWarning("TEsting", false);
+			//DriverStation.reportWarning("Right Drive Encoder:" + Robot.dt.right1.getSensorCollection().getPulseWidthPosition(), false);
     }
     
     /**
