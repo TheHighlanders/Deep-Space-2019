@@ -11,6 +11,7 @@ import frc.robot.commands.*;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.hal.sim.mockdata.DriverStationDataJNI;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -33,8 +34,8 @@ public class OI {
 
 	public Button[] xboxButtons = new Button[11];
 	public Button[] joystickButtons = new Button[13];
-	private Joystick logitech = new Joystick(RobotMap.LOGITECH);
-	private XboxController xbox = new XboxController(RobotMap.XBOX);
+	public Joystick logitech = new Joystick(RobotMap.LOGITECH);
+	public XboxController xbox = new XboxController(RobotMap.XBOX);
 
 	/**
 	 * @return a double corresponding to the position of the Xbox controller's left 
@@ -96,7 +97,7 @@ public class OI {
 	 * Range of 0 to 1. All the way pressed is 1.
 	 */
 	public double getXboxLeftTrigger() {
-		return xbox.getTriggerAxis(GenericHID.Hand.kRight);
+		return xbox.getTriggerAxis(GenericHID.Hand.kLeft);
 	}
 
 	/**
@@ -119,10 +120,11 @@ public class OI {
 			xboxButtons[i] = new JoystickButton(xbox, i);	
 		}
 
-
+		//xboxButtons[5].whileHeld(new Strafe3Cmd());
 		xboxButtons[5].whenPressed(new GrabberExtenderCmd(0));
 		xboxButtons[6].whenPressed(new GrabberExpanderCmd(0));
 
+		//joystickButtons[2].whileHeld(new Strafe2Cmd());
 		joystickButtons[3].whileHeld(new AllClimbersCmd(0.9));
 		joystickButtons[3].whileHeld(new AllClimbersCmd(-0.9));
 		joystickButtons[5].whileHeld(new ClimbersFrontCmd(0.9));

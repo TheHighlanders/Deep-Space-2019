@@ -38,7 +38,7 @@ public class DriveTrain extends Subsystem {
 	
 	public static int forwardOrReverse = -1;
 
-	private static double rampTime = 0.2;
+	private static double rampTime = 0.5;
 	
 	/**
 	 * Constructor, sets up motors, prevents brownouts, and minimizes pedestrian
@@ -184,9 +184,9 @@ public class DriveTrain extends Subsystem {
 	 *         over time.
 	 * 
 	 */
-    public double getDistanceTraveled() {
+    public double getHorDistanceTraveled() {
     	//DriverStation.reportWarning("Left:" + (-(left1.getSensorCollection().getPulseWidthPosition())) + " Right: " + right1.getSensorCollection().getPulseWidthPosition(), false);
-    	return -((double) left1.getSensorCollection().getPulseWidthPosition() / 4096.0) * 6 * Math.PI;
+    	return -((double) middle1.getSensorCollection().getPulseWidthPosition() / 4096.0) * 6 * Math.PI;
     	
     }
     

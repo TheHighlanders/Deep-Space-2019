@@ -4,6 +4,7 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID;
 
 /**
  *
@@ -22,7 +23,10 @@ public class ArcadeDriveCmd extends Command {
 	private final double TANDOMAIN_X = 1.3;
 	private final double TANDOMAIN_TURN = 1.3;
 
-	private final double ANTIDRIFTCOEF = 0;
+	private final double PROP_CON = 2.8;
+	private final double PROP_CON_GYRO = 100;
+
+	private boolean turning = false;
 	
 
 	/*
@@ -45,6 +49,7 @@ public class ArcadeDriveCmd extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+		Robot.dt.resetGyro();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -64,18 +69,28 @@ public class ArcadeDriveCmd extends Command {
 		double moveY = Robot.oi.getXboxLeftY();
 		double turnX = Robot.oi.getXboxRightX();
 
-		processedX = -1 * scaledValTan(moveX, TANDOMAIN_X) * 0.9;
-		processedY = -1 * scaledValTan(moveY, TANDOMAIN_Y) * 0.9 + ANTIDRIFTCOEF * processedX;
+		processedX = scaledValTan(moveX, TANDOMAIN_X) * 0.9;
+		processedY = scaledValTan(moveY, TANDOMAIN_Y) * 0.9;
 
 		//This multiplication prevents output from exceeding (-1, 1)
 
-		
-		processedTurn = (1 - Math.abs(processedY)) * scaledValTan(turnX, TANDOMAIN_TURN);
+		if(Math.abs(turnX) > 0.2){
+			turning = true;
+			processedTurn = (1 - Math.abs(processedY)) * scaledValTan(turnX, TANDOMAIN_TURN);
+		}
+		else{
+			if (turning == true){
+				Robot.dt.resetGyro();
+			}
+			turning = false;
+			processedTurn = -1 * (1 - Math.abs(processedY)) * (processedX / PROP_CON + Robot.dt.getGyroAngle() / PROP_CON_GYRO);
+		}
 
-		if(Robot.oi.xboxButtons[9].get()){
+		if(Robot.oi.xbox.getStickButton(GenericHID.Hand.kRight)){
+			DriverStation.reportWarning("PRECISE MODE ACTIVE", false);
 			processedTurn *= 0.4;
 			processedY *= 0.4;
-			processedX *= 0.4;
+			processedX *= 0.6;
 		}
 	
    	
@@ -92,7 +107,7 @@ public class ArcadeDriveCmd extends Command {
     	//DriverStation.reportWarning("Scaled Val Turn: " + scaledValTan(joystickX * joystickSlider, TANDOMAIN_X), false);
     	//DriverStation.reportWarning("Scaled Val Power: " + scaledValTan(joystickY * joystickSlider, TANDOMAIN_Y), false);
    	
-    	Robot.dt.drive(processedY + processedTurn, processedY - processedTurn, processedX);
+    	Robot.dt.drive(-processedY + processedTurn, -processedY - processedTurn, -processedX);
     	
     }
 

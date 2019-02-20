@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Robot;
 
 public class Strafe1Cmd extends Command {
@@ -18,7 +19,7 @@ public class Strafe1Cmd extends Command {
 
   private final double TAN_DOMAIN = 1.3;
 
-  private final double PROP_CON = 100;
+  private final double PROP_CON = 50;
 
   /*
 	 * Defines a tangent curve that goes from (-1, -1) to (1, 1)
@@ -37,7 +38,6 @@ public class Strafe1Cmd extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.dt.calibrateGyro();
     Robot.dt.resetGyro();
   }
 
@@ -49,7 +49,10 @@ public class Strafe1Cmd extends Command {
 
     processedTurn = Robot.dt.getGyroAngle() / PROP_CON;
 
-    Robot.dt.drive(processedTurn, -processedTurn, processedX);
+
+    DriverStation.reportWarning("Gyro Angle: " + Robot.dt.getGyroAngle(), false);
+    DriverStation.reportWarning("Left: " + -processedTurn + " Right: " + processedTurn + " Middle: " + processedX, false);
+    Robot.dt.drive(-processedTurn, processedTurn, -processedX);
 
   }
 

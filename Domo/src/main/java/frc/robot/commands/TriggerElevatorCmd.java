@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
@@ -38,10 +39,17 @@ public class TriggerElevatorCmd extends Command {
   @Override
   protected void execute() {
     input = Robot.oi.getXboxRightTrigger() - Robot.oi.getXboxLeftTrigger();
-    processedPower = scaledValTan(input, TANDOMAIN) * 0.9;
-    /*if(processedPower > -0.2 && processedPower < 0.2){
-      processedPower = 0.2;
-    }*/
+
+    if (input < 0){
+      processedPower = scaledValTan(input, TANDOMAIN) * 0.7 + 0.2;
+    }
+    else{
+      processedPower = scaledValTan(input, TANDOMAIN) * 0.8 + 0.2;
+    }
+    //DriverStation.reportWarning("Right Trigger: " + Robot.oi.getXboxRightTrigger() + " Left Trigger: " + Robot.oi.getXboxLeftTrigger() + " processedPower: " + processedPower, false);
+    // if(processedPower > -0.2 && processedPower < 0.2){
+    //   processedPower = 0.2;
+    // }
     Robot.el.actuate(processedPower);
   }
 

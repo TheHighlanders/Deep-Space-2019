@@ -14,11 +14,15 @@ public class StrafeDist extends Command {
 	 * driveSpeed is the speed that the robot drives at when it is going straight 
 	 */
 	private double driveSpeed;
+
+	private double currentDriveSpeed;
+	private double currentTurnSpeed;
+
 	/**
 	 * The speed of the wheels that you want to be slower when turning while moving forward.
 	 * Set to left side if turning right, set to right side if turning left.
 	 */
-	/*private double turnSpeed = 0.4;*/
+	private double turnSpeed = 0.4;
 	/**
 	 * targetDistance is how far the robot should travel
 	 */
@@ -38,7 +42,7 @@ public class StrafeDist extends Command {
 	/**
 	 * Current gyro angle. Used for self correcting our angle as we move forwards to make sure we're going straight.
 	 */
-	private double currentAngle = Robot.dt.getGyroAngle();
+	private double currentAngle;
 	/**
 	 * How far our current angle is away from 0.
 	 */
@@ -77,50 +81,28 @@ public class StrafeDist extends Command {
 		if (needReInit){
 			initialize();
 		}
-		currentDistanceOffset = targetDistance - Robot.dt.getDistanceTraveled();
+		currentDistanceOffset = targetDistance - Robot.dt.getHorDistanceTraveled();
 		DriverStation.reportWarning("Gyro Angle: " + Robot.dt.getGyroAngle(), false);
 		currentAngle = Robot.dt.getGyroAngle();
-		if (currentDistanceOffset >= MAXSPEEDTHRESH){
-			if(currentAngle < -2.5) {
-	    		DriverStation.reportWarning("a little to the left", false);
-	    		Robot.dt.drive(0, 0, driveSpeed);
-	    		
-	    	} else if(currentAngle > 2.5) {
-	    		DriverStation.reportWarning("a little to the right", false);
-	    		Robot.dt.drive(0, 0, driveSpeed);
-	    		
-	    	} else {
-	    		//DriverStation.reportWarning("juuuust right", false);
-				Robot.dt.drive(0, 0, driveSpeed);
-	    		
-	    	}
+
+		currentDriveSpeed = driveSpeed;
+		if (Math.abs(currentDistanceOffset) < MAXSPEEDTHRESH){
+			currentDriveSpeed /= 2;
 		}
-		
-		else if (currentDistanceOffset <= -MAXSPEEDTHRESH){
-			DriverStation.reportWarning("Negative distance", false);
-			if(currentAngle > 2.5) {
-	    		
-	    		Robot.dt.drive(0, 0,-driveSpeed);
-	    		
-	    	} else if(currentAngle < -2.5) {
-	    		
-	    		Robot.dt.drive(0, 0,-driveSpeed);
-	    		
-	    	} else {
-	    		
-				Robot.dt.drive(0, 0,-driveSpeed);
-	    		
-	    	}
-				
+
+		if(currentDistanceOffset < 0){
+			currentDriveSpeed *= -1;
 		}
-	
-		else { 
-			//driveSpeed = Math.pow(Math.abs(currentDistanceOffset), 0.8) / 50;
-			//DriverStation.reportWarning("turnSpeed: " + driveSpeed + "currentDistanceOffset: " + currentDistanceOffset, false);
-			Robot.dt.drive(0, 0, driveSpeed/2);
-				
+
+		currentTurnSpeed = turnSpeed;
+		if (Math.abs(currentAngle) < 2.5){
+			currentTurnSpeed = 0;
 		}
-		
+		if(currentAngle < 0){
+			currentTurnSpeed *= -1;
+		}
+
+		Robot.dt.drive(currentTurnSpeed, -currentTurnSpeed, currentDriveSpeed);
 	}
 
 	protected boolean isFinished() {

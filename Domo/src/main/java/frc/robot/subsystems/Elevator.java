@@ -25,7 +25,7 @@ public class Elevator extends Subsystem {
 
   public WPI_TalonSRX elevator;
   
-	private static int rampTime = 1;
+	private static double rampTime = 0.3;
 
   public Elevator() {
     elevator = new WPI_TalonSRX(RobotMap.ELEVATOR);

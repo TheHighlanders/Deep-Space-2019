@@ -18,12 +18,12 @@ package frc.robot;
 public class RobotMap {
 	
 	// Drive Train CAN Ports
-	public static final int LEFT_DRIVE1 = 3;
-	public static final int LEFT_DRIVE2 = 13;
-	public static final int MIDDLE_DRIVE1 = 1;
-	public static final int MIDDLE_DRIVE2 = 11;
-	public static final int RIGHT_DRIVE1 = 2;
-	public static final int RIGHT_DRIVE2 = 12;
+	public static final int LEFT_DRIVE1 = 2;
+	public static final int LEFT_DRIVE2 = 12;
+	public static final int MIDDLE_DRIVE1 = 3;
+	public static final int MIDDLE_DRIVE2 = 13;
+	public static final int RIGHT_DRIVE1 = 1;
+	public static final int RIGHT_DRIVE2 = 11;
 
 	// Climber CAN ports
 	public static final int LEFT_CLIMBER = 4;
@@ -31,10 +31,10 @@ public class RobotMap {
 	public static final int BACK_CLIMBER = 6;
 	
 	//Climber Wheels CAN ports
-	public static final int CLIMBER_WHEELS = 22;
+	public static final int CLIMBER_WHEELS = 21;
 
 	//Elevator CAN ports
-	public static final int ELEVATOR = 21;
+	public static final int ELEVATOR = 22;;
 
 	//Pneumatic solenoid ports in PCM (Pneumatics Control Module)
 	public static final int EXTENDER1 = 0;

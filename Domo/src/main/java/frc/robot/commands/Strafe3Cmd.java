@@ -10,7 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class Strafe2Cmd extends Command {
+public class Strafe3Cmd extends Command {
 
   private double input;
   private double processedX;
@@ -18,8 +18,9 @@ public class Strafe2Cmd extends Command {
 
   private final double TAN_DOMAIN = 1.3;
 
-  //Arrived at
+  //Arrived at 
   private final double PROP_CON = 2.8;
+  private final double PROP_CON_GYRO = 75;
 
   /*
 	 * Defines a tangent curve that goes from (-1, -1) to (1, 1)
@@ -31,7 +32,7 @@ public class Strafe2Cmd extends Command {
   }
   
 
-  public Strafe2Cmd() {
+  public Strafe3Cmd() {
     requires(Robot.dt);
   }
 
@@ -47,7 +48,7 @@ public class Strafe2Cmd extends Command {
     input = Robot.oi.getXboxLeftX();
     processedX = scaledValTan(input, TAN_DOMAIN);
 
-    processedTurn = processedX / PROP_CON;
+    processedTurn = processedX / PROP_CON + Robot.dt.getGyroAngle() / PROP_CON_GYRO;
 
     Robot.dt.drive(-processedTurn, processedTurn, -processedX);
 
