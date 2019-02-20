@@ -76,18 +76,28 @@ public class ArcadeDriveCmd extends Command {
 
 		if(Math.abs(turnX) > 0.2){
 			turning = true;
-			processedTurn = (1 - Math.abs(processedY)) * scaledValTan(turnX, TANDOMAIN_TURN);
+			processedTurn = (1 - Math.abs(processedY)) * scaledValTan(turnX, TANDOMAIN_TURN) * 0.5;
+			//DriverStation.reportWarning("TURNING (POSSIBLY AND STRAFING)", false);
 		}
-		else{
+		else if (Math.abs(moveX) > 0.2) {
 			if (turning == true){
 				Robot.dt.resetGyro();
 			}
 			turning = false;
 			processedTurn = -1 * (1 - Math.abs(processedY)) * (processedX / PROP_CON + Robot.dt.getGyroAngle() / PROP_CON_GYRO);
+			//DriverStation.reportWarning("STRAFING AND NOT TURNING", false);
+		}
+		else{
+			processedTurn = 0;
+			if (turning == true){
+				Robot.dt.resetGyro();
+			}
+			turning = false;
+			//DriverStation.reportWarning("NEITHER STRAFING NOR TURNING", false);
 		}
 
 		if(Robot.oi.xbox.getStickButton(GenericHID.Hand.kRight)){
-			DriverStation.reportWarning("PRECISE MODE ACTIVE", false);
+			//DriverStation.reportWarning("PRECISE MODE ACTIVE", false);
 			processedTurn *= 0.4;
 			processedY *= 0.4;
 			processedX *= 0.6;

@@ -3,12 +3,15 @@ package frc.robot.commands;
 import frc.robot.*;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class StrafeDist extends Command {
+public class StrafeToLineCmd extends Command {
  	
 	/**
 	 * driveSpeed is the speed that the robot drives at when it is going straight 
@@ -50,7 +53,9 @@ public class StrafeDist extends Command {
 	private boolean needReInit = true;
 
 	private final double PROP_CON = 2.8;
-	private final double PROP_CON_GYRO = 75;
+  private final double PROP_CON_GYRO = 75;
+  
+  NetworkTableEntry avgx;
 	
 	/**
 	 * Constructor
@@ -58,11 +63,10 @@ public class StrafeDist extends Command {
 	 * @param targetDist			The total amount of distance you want to travel
 	 * @param acceptedDistOffset	The allowable error between goal and final position of the Robot
 	 */
-	public StrafeDist(double targetDist, double acceptedDistOffset, double speed) {
+	public StrafeToLineCmd(double acceptedDistOffset, double speed) {
 	
 		requires(Robot.dt);
 		
-		this.targetDistance = targetDist;
 		this.acceptedDistanceOffset = acceptedDistOffset;
 		this.driveSpeed = speed;
 	
@@ -73,7 +77,11 @@ public class StrafeDist extends Command {
 		currentDistanceOffset = targetDistance;
 		Robot.dt.setEncoders(0);
 		Robot.dt.resetGyro();
-		needReInit = false;
+    needReInit = false;
+    
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    NetworkTable visionTable = inst.getTable("visionTable");
+    avgx = visionTable.getEntry("avgx");
 	
 	}
 	
@@ -84,7 +92,7 @@ public class StrafeDist extends Command {
 		if (needReInit){
 			initialize();
 		}
-		currentDistanceOffset = targetDistance - Robot.dt.getHorDistanceTraveled();
+		currentDistanceOffset = avgx.getDouble(1000) / 4;
 		DriverStation.reportWarning("Distance Traveled: " + Robot.dt.getHorDistanceTraveled(), false);
 		DriverStation.reportWarning("Gyro Angle: " + Robot.dt.getGyroAngle(), false);
 		currentAngle = Robot.dt.getGyroAngle();

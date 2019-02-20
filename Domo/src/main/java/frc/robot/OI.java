@@ -124,17 +124,23 @@ public class OI {
 		xboxButtons[5].whenPressed(new GrabberExtenderCmd(0));
 		xboxButtons[6].whenPressed(new GrabberExpanderCmd(0));
 
-		//joystickButtons[2].whileHeld(new Strafe2Cmd());
-		joystickButtons[3].whileHeld(new AllClimbersCmd(0.9));
-		joystickButtons[3].whileHeld(new AllClimbersCmd(-0.9));
-		joystickButtons[5].whileHeld(new ClimbersFrontCmd(0.9));
-		joystickButtons[6].whileHeld(new ClimbersFrontCmd(-0.9));
+		joystickButtons[2].whenPressed(new DriveIntoWallCmd());
+		joystickButtons[3].whileHeld(new AllClimbersCmd(0.5));
+		joystickButtons[4].whileHeld(new AllClimbersCmd(-0.5));
 		
-		joystickButtons[7].whileHeld(new ClimberLeftCmd(1));
-		joystickButtons[8].whileHeld(new ClimberLeftCmd(-1));
-		joystickButtons[9].whileHeld(new ClimberRightCmd(1));
-		joystickButtons[10].whileHeld(new ClimberRightCmd(-1));
-		joystickButtons[11].whileHeld(new ClimberBackCmd(1));
-		joystickButtons[11].whileHeld(new ClimberBackCmd(-1));
+		
+		joystickButtons[5].whenPressed(new StrafeDist(40, 5, 0.5)); //goes towards right
+		joystickButtons[6].whenPressed(new StrafeToLineCmd(5, 0.5));
+		
+		joystickButtons[7].whileHeld(new ClimberLeftCmd(0.5));
+		joystickButtons[8].whileHeld(new ClimberLeftCmd(-0.5));
+
+
+		joystickButtons[9].whileHeld(new ClimberRightCmd(0.5));
+		joystickButtons[10].whileHeld(new ClimberRightCmd(-0.5));
+
+
+		joystickButtons[11].whileHeld(new ClimberBackCmd(0.5));
+		joystickButtons[12].whileHeld(new ClimberBackCmd(-0.5 )); 
 	}
 }

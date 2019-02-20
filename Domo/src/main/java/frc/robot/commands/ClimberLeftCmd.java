@@ -12,31 +12,22 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.DriverStation;
 
 public class ClimberLeftCmd extends Command {
-  private int dir;
+  private double power;
 
-  public ClimberLeftCmd(int dir) {
+  public ClimberLeftCmd(double power) {
     requires(Robot.cl);
-    this.dir = dir;
+    this.power = power;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-      if( dir != 1 && dir != -1){
-        DriverStation.reportWarning("Dir parameter must be 1 (extend) or -1 (retract).", false);
-        end();
-      }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() { 
-    if(dir == 1){
-      Robot.cl.move(0.9);
-    }
-    else{
-      Robot.cl.move(-0.9);
-    }
+    Robot.cl.move(power);
   }
 
   // Make this return true when this Command no longer needs to run execute()

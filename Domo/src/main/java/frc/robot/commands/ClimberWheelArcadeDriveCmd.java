@@ -39,7 +39,7 @@ public class ClimberWheelArcadeDriveCmd extends Command {
   @Override
   protected void execute() {
     input = Robot.oi.getJoysticktY();
-    processedPower = scaledValTan(input, TANDOMAIN) * 0.9;
+    processedPower = - scaledValTan(input, TANDOMAIN) * 0.9;
     Robot.cw.drive(processedPower);
   }
 

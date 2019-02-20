@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.commands.ClimberRightCmd;
 import frc.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -22,18 +23,17 @@ public class ClimberRight extends Subsystem {
   public WPI_TalonSRX climberRight;
 
   public ClimberRight(){
-      climberRight = new WPI_TalonSRX(RobotMap.BACK_CLIMBER);
+      climberRight = new WPI_TalonSRX(RobotMap.RIGHT_CLIMBER);
       climberRight.configOpenloopRamp(1/3, 0);
     	climberRight.setNeutralMode(NeutralMode.Brake);
   }
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new ClimberRightCmd(0));
   }
 
   public void move(double power){
   	  //DriverStation.reportWarning("Power: " + power, false);
-    	climberRight.set(power);
+    	climberRight.set(-power);
   }
 }

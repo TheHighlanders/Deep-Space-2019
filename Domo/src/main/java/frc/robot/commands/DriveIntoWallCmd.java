@@ -13,7 +13,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 public class DriveIntoWallCmd extends Command {
 
-public final float STOPPED_CURRENT = 5;
+public final float STOPPED_CURRENT = 2;
+public double prevCur = 3;
 
   public DriveIntoWallCmd() {
     requires(Robot.dt);
@@ -31,12 +32,14 @@ public final float STOPPED_CURRENT = 5;
     Robot.dt.drive(0.2,0.2,0);
     DriverStation.reportWarning("Current to left1: " + Robot.dt.left1.getOutputCurrent(), false);
     DriverStation.reportWarning("(Robot.dt.left1.getOutputCurrent() > STOPPED_CURRENT) " + (Robot.dt.left1.getOutputCurrent() > STOPPED_CURRENT), false);
+    DriverStation.reportWarning("Current Jump: " + (Robot.dt.left1.getOutputCurrent() - prevCur), false);
+    prevCur = Robot.dt.left1.getOutputCurrent();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return (Robot.dt.left1.getOutputCurrent() > STOPPED_CURRENT);
+    return (Robot.dt.left1.getOutputCurrent() > STOPPED_CURRENT) || (Robot.dt.left1.getOutputCurrent() - prevCur > 3);
     //return false;
   }
 
