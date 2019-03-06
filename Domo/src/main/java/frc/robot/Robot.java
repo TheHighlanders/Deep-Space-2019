@@ -141,7 +141,9 @@ public class Robot extends TimedRobot {
 		//The Scheduler runs commands that are in motion and starts commands when triggered by buttons
 		Scheduler.getInstance().run();
  		dt.resetGyro();
- 		dt.setEncoders(0);
+		 dt.setEncoders(0);
+		 cl.setEncoders(0);
+		 cr.setEncoders(0);
 	}
 
 	/**

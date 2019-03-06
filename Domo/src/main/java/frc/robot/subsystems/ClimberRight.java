@@ -9,10 +9,12 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.commands.ClimberRightCmd;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 /**
  * Add your docs here.
@@ -25,7 +27,9 @@ public class ClimberRight extends Subsystem {
   public ClimberRight(){
       climberRight = new WPI_TalonSRX(RobotMap.RIGHT_CLIMBER);
       climberRight.configOpenloopRamp(1/3, 0);
-    	climberRight.setNeutralMode(NeutralMode.Brake);
+      climberRight.setNeutralMode(NeutralMode.Brake);
+      climberRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+      this.setEncoders(0);
   }
   @Override
   public void initDefaultCommand() {
@@ -34,6 +38,22 @@ public class ClimberRight extends Subsystem {
 
   public void move(double power){
   	  //DriverStation.reportWarning("Power: " + power, false);
-    	climberRight.set(-power);
+      climberRight.set(-power);
+      SmartDashboard.putNumber("RIGHT", this.getEncoders());
+  }
+
+  /**
+	 * Sets Climber encoders
+	 */
+  public void setEncoders(int pulses) {
+    climberRight.getSensorCollection().setPulseWidthPosition(pulses, 0);
+    //DriverStation.reportWarning("Right Drive Encoder:" + Robot.dt.right1.getSensorCollection().getPulseWidthPosition(), false);
+  }
+
+  /**
+	 * Gets Climber encoders
+	 */
+  public int getEncoders() {
+    return climberRight.getSensorCollection().getPulseWidthPosition();
   }
 }

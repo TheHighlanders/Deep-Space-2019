@@ -74,7 +74,7 @@ public class DriveTrain extends Subsystem {
 			middle2.follow(middle1);
 
     	
-    	//left1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+    	middle1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
     	//right1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
     	
     }
@@ -163,7 +163,7 @@ public class DriveTrain extends Subsystem {
     	
     }
     
-    /**
+  	/**
 	 * Sets the drivetrain encoders back to 0 pulses
 	 * Only one message will print here
 	 * Leave this at -3000?

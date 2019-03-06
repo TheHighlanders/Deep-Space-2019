@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.RobotMap;
 
@@ -37,10 +38,12 @@ public class Grabber extends Subsystem {
   public void extend(){
       extender.set(DoubleSolenoid.Value.kForward);
       extenderPos = true;
+      SmartDashboard.putBoolean("Extended?", true);
   }
   public void retract(){
       extender.set(DoubleSolenoid.Value.kReverse);
       extenderPos = false;
+      SmartDashboard.putBoolean("Extended?", false);
   }
   public void toggleExtender(){
       if(extenderPos){
@@ -53,11 +56,13 @@ public class Grabber extends Subsystem {
   
   public void grab(){
       expander.set(DoubleSolenoid.Value.kForward);
-      extenderPos = true;
+      expanderPos = true;
+      SmartDashboard.putBoolean("Grabbed?", true);
   }
   public void release(){
       expander.set(DoubleSolenoid.Value.kReverse);
-      extenderPos = false;
+      expanderPos = false;
+      SmartDashboard.putBoolean("Grabbed?", false);
   }
   public void toggleExpander(){
     if(expanderPos){
