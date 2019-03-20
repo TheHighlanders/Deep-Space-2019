@@ -28,7 +28,7 @@ public class ClimberRight extends Subsystem {
       climberRight = new WPI_TalonSRX(RobotMap.RIGHT_CLIMBER);
       climberRight.configOpenloopRamp(1/3, 0);
       climberRight.setNeutralMode(NeutralMode.Brake);
-      climberRight.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 0);
+      climberRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
       this.setEncoders(0);
   }
   @Override

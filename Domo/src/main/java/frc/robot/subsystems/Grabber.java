@@ -39,6 +39,7 @@ public class Grabber extends Subsystem {
       extender.set(DoubleSolenoid.Value.kForward);
       extenderPos = true;
       SmartDashboard.putBoolean("Extended?", true);
+      //Robot.oi.setXboxRumble(1);
   }
   public void retract(){
       extender.set(DoubleSolenoid.Value.kReverse);
