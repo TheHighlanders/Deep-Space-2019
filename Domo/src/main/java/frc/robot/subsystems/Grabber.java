@@ -9,10 +9,12 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.RobotMap;
+import frc.robot.Robot;
 
 /**
  * Add your docs here.
@@ -39,40 +41,25 @@ public class Grabber extends Subsystem {
       extender.set(DoubleSolenoid.Value.kForward);
       extenderPos = true;
       SmartDashboard.putBoolean("Extended?", true);
-      //Robot.oi.setXboxRumble(1);
   }
   public void retract(){
       extender.set(DoubleSolenoid.Value.kReverse);
       extenderPos = false;
       SmartDashboard.putBoolean("Extended?", false);
   }
-  public void toggleExtender(){
-      if(extenderPos){
-          this.retract();
-      }
-      else{
-            this.extend();
-      }
-  }
   
   public void grab(){
       expander.set(DoubleSolenoid.Value.kForward);
       expanderPos = true;
+      DriverStation.reportWarning("Just expanded grabber. ExpanderPos = " + expanderPos, false);
       SmartDashboard.putBoolean("Grabbed?", true);
   }
   public void release(){
       expander.set(DoubleSolenoid.Value.kReverse);
       expanderPos = false;
+      DriverStation.reportWarning("Just released grabber. ExpanderPos = " + expanderPos, false);
       SmartDashboard.putBoolean("Grabbed?", false);
   }
-  public void toggleExpander(){
-    if(expanderPos){
-        this.release();
-    }
-    else{
-        this.grab();
-    }
-}
 
   @Override
   public void initDefaultCommand() {

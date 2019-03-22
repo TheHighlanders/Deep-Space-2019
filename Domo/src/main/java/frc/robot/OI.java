@@ -125,13 +125,17 @@ public class OI {
 		xboxButtons[6].whenPressed(new GrabberExpanderCmd(0));
 
 		joystickButtons[2].whenPressed(new DriveIntoWallCmd());
-		joystickButtons[3].whileHeld(new AllClimbersCmd(0.5));
-		joystickButtons[4].whileHeld(new AllClimbersCmd(-0.5));
+		joystickButtons[3].whileHeld(new AllClimbersCmd(-1));
+		joystickButtons[4].whileHeld(new AllClimbersCmd(1));
 		
 		
-		joystickButtons[5].whenPressed(new StrafeDist(40, 5, 0.5)); //goes towards right
-		joystickButtons[6].whenPressed(new StrafeToLineCmd(5, 0.5));
+		// joystickButtons[5].whenPressed(new StrafeDist(40, 5, 0.5)); //goes towards right
+		// joystickButtons[6].whenPressed(new StrafeToLineCmd(5, 0.5));
 		
+		joystickButtons[5].whenPressed(new GrabberExpanderCmd(1)); //goes towards right
+		joystickButtons[6].whenPressed(new GrabberExpanderCmd(-1));
+
+
 		joystickButtons[7].whileHeld(new ClimberLeftCmd(0.5));
 		joystickButtons[8].whileHeld(new ClimberLeftCmd(-0.5));
 

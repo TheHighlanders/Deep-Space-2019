@@ -144,6 +144,7 @@ public class Robot extends TimedRobot {
 		dt.setEncoders(0);
 		cl.setEncoders(0);
 		cr.setEncoders(0);
+		cb.setEncoders(0);
 	}
 
 	/**

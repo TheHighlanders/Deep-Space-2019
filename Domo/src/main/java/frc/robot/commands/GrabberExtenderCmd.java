@@ -18,6 +18,14 @@ public class GrabberExtenderCmd extends Command {
   public GrabberExtenderCmd(int dir) {
       requires(Robot.gr);
       this.dir = dir;
+      if (this.dir == 0){
+          if(Robot.gr.extenderPos){
+              this.dir = -1;
+          }
+          else{
+              this.dir = 1;
+          }
+      }
 
   }
 
@@ -35,12 +43,14 @@ public class GrabberExtenderCmd extends Command {
   protected void execute() {
       if(dir == 1){
           Robot.gr.extend();
+          DriverStation.reportWarning("EXTENDING", false);
+          Robot.oi.setXboxRumble(1);
+          dir = -1;
       }
       else if(dir == -1){
           Robot.gr.retract();
-      }
-      else{
-          Robot.gr.toggleExtender();
+          DriverStation.reportWarning("RETRACTING", false);
+          dir = 1;
       }
   }
 
@@ -53,11 +63,18 @@ public class GrabberExtenderCmd extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    double startTime = System.currentTimeMillis();
+    while(System.currentTimeMillis() - startTime < 100){
+
+    }
+
+    Robot.oi.setXboxRumble(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.oi.setXboxRumble(0);
   }
 }

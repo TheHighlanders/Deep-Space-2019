@@ -34,13 +34,13 @@ public class RobotMap {
 	public static final int CLIMBER_WHEELS = 21;
 
 	//Elevator CAN ports
-	public static final int ELEVATOR = 22;;
+	public static final int ELEVATOR = 22;
 
 	//Pneumatic solenoid ports in PCM (Pneumatics Control Module)
-	public static final int EXTENDER1 = 0;
-	public static final int EXTENDER2 = 1;
-	public static final int EXPANDER1 = 2;
-	public static final int EXPANDER2 = 3;
+	public static final int EXTENDER1 = 1;
+	public static final int EXTENDER2 = 0;
+	public static final int EXPANDER1 = 3;
+	public static final int EXPANDER2 = 2;
 	
 	//X Box controller laptop port
 	public static final int XBOX = 0;
