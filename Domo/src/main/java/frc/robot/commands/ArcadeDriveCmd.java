@@ -76,7 +76,7 @@ public class ArcadeDriveCmd extends Command {
 
 		if(Math.abs(turnX) > 0.2){
 			turning = true;
-			processedTurn = (1 - Math.abs(processedY)) * scaledValTan(turnX, TANDOMAIN_TURN) * 0.5;
+			processedTurn = (1 - Math.abs(processedY)) * scaledValTan(turnX, TANDOMAIN_TURN); // * 0.5;
 			//DriverStation.reportWarning("TURNING (POSSIBLY AND STRAFING)", false);
 		}
 		else if (Math.abs(moveX) > 0.2) {

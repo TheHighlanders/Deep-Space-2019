@@ -136,15 +136,15 @@ public class OI {
 		joystickButtons[6].whenPressed(new GrabberExpanderCmd(-1));
 
 
-		joystickButtons[7].whileHeld(new ClimberLeftCmd(0.5));
-		joystickButtons[8].whileHeld(new ClimberLeftCmd(-0.5));
+		joystickButtons[7].whileHeld(new ClimberLeftCmd(0.8));
+		joystickButtons[8].whileHeld(new ClimberLeftCmd(-0.8));
 
 
-		joystickButtons[9].whileHeld(new ClimberRightCmd(0.5));
-		joystickButtons[10].whileHeld(new ClimberRightCmd(-0.5));
+		joystickButtons[9].whileHeld(new ClimberRightCmd(0.8));
+		joystickButtons[10].whileHeld(new ClimberRightCmd(-0.8));
 
 
-		joystickButtons[11].whileHeld(new ClimberBackCmd(0.5));
-		joystickButtons[12].whileHeld(new ClimberBackCmd(-0.5 )); 
+		joystickButtons[11].whileHeld(new ClimberBackCmd(1));
+		joystickButtons[12].whileHeld(new ClimberBackCmd(-1 )); 
 	}
 }
